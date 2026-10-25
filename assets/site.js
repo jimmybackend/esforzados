@@ -5,6 +5,7 @@
   const slides = carousel ? Array.from(carousel.querySelectorAll(".slide")) : [];
   const dots = carousel ? Array.from(carousel.querySelectorAll(".carousel-dot")) : [];
   const announcement = document.getElementById("carousel-announcement");
+  const serviceNavigation = Array.from(document.querySelectorAll("[data-slide-target]"));
   const names = ["Esforzados Legal", "ArcadeCloud Drive", "Esforzados Hub", "Esforzados Chat", "Esforzados Edu"];
   let active = 0;
   let timer = null;
@@ -59,6 +60,15 @@
     dots.forEach((dot, i) => {
       dot.addEventListener("click", () => {
         goToSlide(i);
+        startAutoplay();
+      });
+    });
+
+    serviceNavigation.forEach(link => {
+      link.addEventListener("click", () => {
+        const index = Number(link.dataset.slideTarget);
+        if (!Number.isInteger(index) || index < 0 || index >= slides.length) return;
+        goToSlide(index);
         startAutoplay();
       });
     });
