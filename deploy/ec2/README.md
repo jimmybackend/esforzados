@@ -200,3 +200,26 @@ curl -I -H 'Host: preview.50.17.162.57.sslip.io' \
 El último comando debe devolver `200 OK` y `Content-Type: image/png`. Si el checkout temporal se eliminó, vuelve a clonarlo en una carpeta temporal nueva, revisa el script y realiza el paso de instalación.
 
 **Importante:** el timer se encarga de publicar en el futuro los cambios de HTML, CSS, JS, SVG y el PNG ya incorporado a la lista blanca. Añadir un **nuevo nombre** de recurso a la lista en el repositorio vuelve a requerir actualizar el ejecutable local o configurar un mecanismo explícito de distribución del updater con revisión de seguridad.
+
+## Incorporar la diapositiva 2 — ArcadeCloud Drive (imagen AWS S3 original)
+
+El archivo `assets/carousel-drive-aws.png` ya está en el repositorio principal y conserva los bytes exactos de la imagen `drive/images/home/carousel-01-s3-aws.png` en `jimmybackend/s3`.
+
+En esta versión, el actualizador acepta `assets/carousel-*.png` además de los cuatro archivos base y repara releases existentes. Esto hace que **futuras imágenes con ese prefijo no requieran modificar otra vez el script**.
+
+**Importante:** el actualizador del EC2 quedó copiado en `/usr/local/libexec/esforzados-update` durante la instalación inicial. Aunque `main` se sincronice automáticamente, ese ejecutable no cambia solo. Actualízalo **una vez** después de fusionar el cambio, sin ejecutar el instalador completo:
+
+```bash
+git -C /tmp/esforzados-install pull --ff-only origin main
+sudo install -o root -g root -m 0755 \
+    /tmp/esforzados-install/deploy/ec2/update.sh \
+    /usr/local/libexec/esforzados-update
+sudo systemctl start esforzados-update.service
+ls -lh /var/www/esforzados/current/assets/carousel-drive-aws.png
+curl -I -H 'Host: preview.50.17.162.57.sslip.io' \
+    http://127.0.0.1/assets/carousel-drive-aws.png
+```
+
+El último comando debe devolver `200 OK` con `Content-Type: image/png`. Si el directorio temporal `/tmp/esforzados-install` ya no existe, clonar nuevamente el repositorio **en un directorio temporal vacío**, inspeccionar el script y repetir la copia del ejecutable. No cambiar los vhosts de Nginx de otros servicios.
+
+La página sigue siendo una vista **pública y temporal** por HTTP: no usarla para clientes, sesiones ni expedientes.
