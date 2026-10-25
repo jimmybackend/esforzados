@@ -278,3 +278,54 @@ h1 em,h2 em {font-family:Georgia,Cambria,"Times New Roman",serif;letter-spacing:
   html {scroll-behavior:auto;}
   *,*::before,*::after {scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;}
 }
+
+/* Carrusel Legal: imagen aprobada, sin duplicar títulos incrustados en la ilustración. */
+.slide-legal-artwork {
+  display: block;
+  min-height: 0;
+  background: #160f0c;
+}
+.slide-legal-artwork::before { display: none; }
+.legal-artwork { margin: 0; }
+.legal-artwork > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1672 / 941;
+  object-fit: contain;
+  background: #160f0c;
+}
+.legal-artwork-caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 15px 25px;
+  background: #18110e;
+  border-top: 1px solid rgba(217,173,124,.34);
+}
+.legal-artwork-caption-text {
+  display: block;
+  max-width: 750px;
+  color: #e4d9d0;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.legal-artwork-action {
+  padding: 11px 17px;
+  border-radius: 5px;
+  font-size: 12px;
+  flex-shrink: 0;
+  color: #231712;
+}
+@media (max-width: 760px) {
+  .slide-legal-artwork { min-height: 0; }
+  .legal-artwork-caption {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 13px;
+    padding: 18px;
+  }
+  .legal-artwork-caption-text { font-size: 12px; }
+  .legal-artwork-action { width: 100%; }
+}
