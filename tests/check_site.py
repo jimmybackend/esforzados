@@ -62,7 +62,7 @@ def check() -> None:
     assert html.count("https://hub.esforzados.com/") >= 1
 
     assert 'src="assets/carousel-legal.png"' in html, "Banner aprobado de Legal no enlazado"
-    assert (ROOT / "assets/carousel-legal.png").read_bytes().startswith(b"\\x89PNG\\r\\n\\x1a\\n"), "PNG de Legal inválido"
+    assert (ROOT / "assets/carousel-legal.png").read_bytes().startswith(bytes.fromhex("89504e470d0a1a0a")), "PNG de Legal inválido"
     ET.parse(ROOT / "assets/brand.svg")
     updater = (ROOT / "deploy/ec2/update.sh").read_text(encoding="utf-8")
     for filename in FILES:
