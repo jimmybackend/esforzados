@@ -5,7 +5,6 @@
   const slides = carousel ? Array.from(carousel.querySelectorAll(".slide")) : [];
   const dots = carousel ? Array.from(carousel.querySelectorAll(".carousel-dot")) : [];
   const announcement = document.getElementById("carousel-announcement");
-  const serviceNavigation = Array.from(document.querySelectorAll("[data-slide-target]"));
   const names = ["Esforzados Legal", "ArcadeCloud Drive", "Esforzados Hub", "Esforzados Chat", "Esforzados Edu"];
   let active = 0;
   let timer = null;
@@ -64,15 +63,6 @@
       });
     });
 
-    serviceNavigation.forEach(link => {
-      link.addEventListener("click", () => {
-        const index = Number(link.dataset.slideTarget);
-        if (!Number.isInteger(index) || index < 0 || index >= slides.length) return;
-        goToSlide(index);
-        startAutoplay();
-      });
-    });
-
     carousel.querySelector(".carousel-prev")?.addEventListener("click", () => {
       goToSlide(active - 1);
       startAutoplay();
@@ -119,40 +109,6 @@
       motionPreference.addEventListener("change", startAutoplay);
     }
     startAutoplay();
-  }
-
-  const menuButton = document.querySelector(".menu-toggle");
-  const menu = document.getElementById("menu-principal");
-
-  function setMenuOpen(open) {
-    if (!menu || !menuButton) return;
-    menu.classList.toggle("is-open", open);
-    menuButton.setAttribute("aria-expanded", String(open));
-    menuButton.setAttribute("aria-label", open ? "Cerrar menú de navegación" : "Abrir menú de navegación");
-  }
-
-  if (menuButton && menu) {
-    menuButton.addEventListener("click", () => {
-      setMenuOpen(menuButton.getAttribute("aria-expanded") !== "true");
-    });
-
-    menu.querySelectorAll("a").forEach(link => link.addEventListener("click", () => setMenuOpen(false)));
-
-    document.addEventListener("keydown", event => {
-      if (event.key === "Escape" && menuButton.getAttribute("aria-expanded") === "true") {
-        setMenuOpen(false);
-        menuButton.focus();
-      }
-    });
-
-    document.addEventListener("click", event => {
-      if (event.target instanceof Node &&
-          !menu.contains(event.target) && !menuButton.contains(event.target)) setMenuOpen(false);
-    });
-
-    window.matchMedia("(min-width: 761px)").addEventListener?.("change", event => {
-      if (event.matches) setMenuOpen(false);
-    });
   }
 
   const year = document.getElementById("year");
