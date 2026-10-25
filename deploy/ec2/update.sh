@@ -40,16 +40,25 @@ if [[ -d "$release" && ! -L "$release" ]]; then
   chmod 0755 "$release" "$release/assets"
 fi
 
-# LISTA BLANCA: publicar sólo HTML/CSS/JS/SVG e imágenes aprobadas.
-# Comprobarla ANTES del retorno por mismo SHA para reparar releases incompletos.
-readonly files=("index.html" "assets/site.css" "assets/site.js" "assets/brand.svg" "assets/carousel-legal.png")
+# Lista blanca: archivos de la portada y SOLO imágenes carousel-*.png
+# existentes en assets/. Al incorporar futuras imágenes del carrusel en GitHub,
+# no hay que volver a editar el script ni hacer cambios al Nginx.
+[[ -d "$REPO_DIR/assets" && ! -L "$REPO_DIR/assets" ]] || fail "Directorio assets inválido."
+files=("index.html" "assets/site.css" "assets/site.js" "assets/brand.svg")
+for source_image in "$REPO_DIR"/assets/carousel-*.png; do
+  [[ -e "$source_image" ]] || continue
+  [[ -f "$source_image" && ! -L "$source_image" ]] || fail "Imagen inválida o enlace simbólico: $source_image"
+  files+=("assets/${source_image##*/}")
+done
+(( ${#files[@]} <= 30 )) || fail "Demasiados recursos en la lista blanca; revisar el repositorio."
+readonly -a files
+# Comprobar todos los archivos ANTES del retorno por mismo SHA.
 for file in "${files[@]}"; do
   [[ -f "$REPO_DIR/$file" && ! -L "$REPO_DIR/$file" ]] || fail "Archivo inválido o enlace simbólico: $file"
 done
-[[ -d "$REPO_DIR/assets" && ! -L "$REPO_DIR/assets" ]] || fail "Directorio assets inválido."
 
 # Reparar versiones ya publicadas cuando se instaló un actualizador antiguo:
-# puede faltar carousel-legal.png aun si current apunta al mismo commit.
+# puede faltar una imagen carousel-*.png aun si current apunta al mismo commit.
 # Cada archivo se copia a un temporal y se renombra atómicamente.
 if [[ -d "$release" ]]; then
   [[ ! -L "$release" ]] || fail "Release no debe ser enlace simbólico."

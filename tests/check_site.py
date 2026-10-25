@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 from html.parser import HTMLParser
+import hashlib
+import struct
 from pathlib import Path
 import re
 import sys
@@ -10,7 +12,7 @@ import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "index.html"
-FILES = ("index.html", "assets/site.css", "assets/site.js", "assets/brand.svg", "assets/carousel-legal.png")
+FILES = ("index.html", "assets/site.css", "assets/site.js", "assets/brand.svg", "assets/carousel-legal.png", "assets/carousel-drive-aws.png")
 
 
 class Page(HTMLParser):
@@ -46,7 +48,8 @@ def check() -> None:
     assert len(set(page.ids)) == len(page.ids), "IDs HTML duplicados"
     assert len(page.slides) == 5, "Se necesitan cinco diapositivas"
     assert len(page.controls) == 5, "Se necesitan cinco botones"
-    assert set(page.slides) == {control for control, _ in page.controls}, "Controles no corresponden a diapositivas"
+    assert page.slides == ["slide-legal", "slide-drive", "slide-edu", "slide-hub", "slide-chat"], "Orden esperado: Legal, Drive, Edu, Hub, Chat"
+    assert [control for control, _ in page.controls] == page.slides, "Controles desordenados respecto a diapositivas"
     assert sorted(int(i) for _, i in page.controls) == list(range(5)), "Índices del carrusel inválidos"
 
     for href in page.links:
@@ -62,11 +65,21 @@ def check() -> None:
     assert html.count("https://hub.esforzados.com/") >= 1
 
     assert 'src="assets/carousel-legal.png"' in html, "Banner aprobado de Legal no enlazado"
+    assert 'src="assets/carousel-drive-aws.png"' in html, "Imagen original de Drive no enlazada"
     assert (ROOT / "assets/carousel-legal.png").read_bytes().startswith(bytes.fromhex("89504e470d0a1a0a")), "PNG de Legal inválido"
+    drive = (ROOT / "assets/carousel-drive-aws.png").read_bytes()
+    assert drive.startswith(bytes.fromhex("89504e470d0a1a0a")), "PNG original de Drive inválido"
+    assert struct.unpack(">II", drive[16:24]) == (1916, 821), "Dimensiones de original AWS S3 inesperadas"
+    git_blob = hashlib.sha1(b"blob " + str(len(drive)).encode() + bytes([0]) + drive).hexdigest()
+    assert git_blob == "dd7395d4e030ead572a56c4f498a8ecd94ca02b0", "La imagen AWS S3 no coincide con el original de ArcadeCloud"
+    js = (ROOT / "assets/site.js").read_text(encoding="utf-8")
+    assert '["Esforzados Legal", "ArcadeCloud Drive", "Esforzados Edu"' in js, "Anuncios JS del carrusel desordenados"
     ET.parse(ROOT / "assets/brand.svg")
     updater = (ROOT / "deploy/ec2/update.sh").read_text(encoding="utf-8")
-    for filename in FILES:
-        assert f'"{filename}"' in updater, f"El instalador no publica {filename}"
+    for filename in ("index.html", "assets/site.css", "assets/site.js", "assets/brand.svg"):
+        assert f'"{filename}"' in updater, f"El actualizador no publica {filename}"
+    assert '"$REPO_DIR"/assets/carousel-*.png' in updater, "Falta patrón estricto para recursos PNG"
+    assert 'files+=("assets/${source_image##*/}")' in updater, "El actualizador no incorpora los PNG del carrusel"
     assert "git clone" in updater and "fetch" in updater
     assert "/var/lib/esforzados/repo" in updater
     assert "/var/www/esforzados" in updater
@@ -78,7 +91,7 @@ def check() -> None:
     # Evitar que el publicador ignore un PNG faltante porque ya se publicó el SHA.
     assert 'cmp -s "$REPO_DIR/$file" "$release/$file"' in updater
     assert 'Reparado archivo del release' in updater
-    assert updater.index('readonly files=') < updater.index('if [[ -L "$WEB_ROOT/current" ]]')
+    assert updater.index('files=("index.html"') < updater.index('if [[ -L "$WEB_ROOT/current" ]]')
     assert updater.index('Reparar versiones ya publicadas') < updater.index('if [[ -L "$WEB_ROOT/current" ]]')
 
     print("OK: sitio, carrusel, permisos y reparación automática de imágenes faltantes.")
