@@ -40,18 +40,36 @@ if [[ -d "$release" && ! -L "$release" ]]; then
   chmod 0755 "$release" "$release/assets"
 fi
 
-if [[ -L "$WEB_ROOT/current" ]] && [[ "$(readlink "$WEB_ROOT/current")" == "$target" ]]; then
-  log "Sin cambios: el sitio ya usa $sha (permisos verificados)."
-  exit 0
-fi
-
-# LISTA BLANCA: nunca publicar .git, secretos, deploy/, workflows ni archivos
-# que se agreguen accidentalmente al repositorio.
+# LISTA BLANCA: publicar sólo HTML/CSS/JS/SVG e imágenes aprobadas.
+# Comprobarla ANTES del retorno por mismo SHA para reparar releases incompletos.
 readonly files=("index.html" "assets/site.css" "assets/site.js" "assets/brand.svg" "assets/carousel-legal.png")
 for file in "${files[@]}"; do
   [[ -f "$REPO_DIR/$file" && ! -L "$REPO_DIR/$file" ]] || fail "Archivo inválido o enlace simbólico: $file"
 done
 [[ -d "$REPO_DIR/assets" && ! -L "$REPO_DIR/assets" ]] || fail "Directorio assets inválido."
+
+# Reparar versiones ya publicadas cuando se instaló un actualizador antiguo:
+# puede faltar carousel-legal.png aun si current apunta al mismo commit.
+# Cada archivo se copia a un temporal y se renombra atómicamente.
+if [[ -d "$release" ]]; then
+  [[ ! -L "$release" ]] || fail "Release no debe ser enlace simbólico."
+  for file in "${files[@]}"; do
+    [[ ! -L "$release/$file" ]] || fail "Archivo de destino inesperadamente es enlace: $file"
+    if ! cmp -s "$REPO_DIR/$file" "$release/$file"; then
+      staged_file="$(mktemp "$release/.repair.XXXXXXXX")"
+      trap 'rm -f -- "${staged_file:-}"' EXIT
+      install -m 0644 "$REPO_DIR/$file" "$staged_file"
+      mv -Tf -- "$staged_file" "$release/$file"
+      trap - EXIT
+      log "Reparado archivo del release: $file"
+    fi
+  done
+fi
+
+if [[ -L "$WEB_ROOT/current" ]] && [[ "$(readlink "$WEB_ROOT/current")" == "$target" ]]; then
+  log "Sin cambios: el sitio ya usa $sha (archivos y permisos verificados)."
+  exit 0
+fi
 
 if [[ ! -d "$release" ]]; then
   stage="$(mktemp -d "$RELEASES/.stage.XXXXXXXX")"
