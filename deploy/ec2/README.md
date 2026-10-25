@@ -171,3 +171,32 @@ Si `/tmp/esforzados-install` ya no está disponible, descargar una copia nueva a
 La prueba HTTP con cabecera Host verifica únicamente el bloque virtual de Esforzados; cualquier cambio de DNS o nombre de host se maneja por separado. El sitio sigue siendo un **preview público sin datos de expedientes**.
 
 > **Imagen Legal (2026-10-25):** tras fusionar, actualizar una vez el ejecutable instalado en EC2 con la versión de `deploy/ec2/update.sh` que añade el PNG a la lista blanca. Véase README principal, sección «Carrusel Legal». Sin ese paso el timer actualizará el HTML pero no copiará el PNG.
+
+## Incidencia: carrusel Legal muestra texto alternativo / PNG no visible
+
+**Síntoma:** `index.html` aparece, pero la imagen del primer slide no carga; `ls /var/www/esforzados/current/assets/carousel-legal.png` informa que no existe. El repositorio Git en EC2 sí tiene `assets/carousel-legal.png`.
+
+**Causa:** el instalador copió `deploy/ec2/update.sh` una sola vez a `/usr/local/libexec/esforzados-update`. Un `git pull` dentro de `/tmp/esforzados-install` **no actualiza automáticamente** ese ejecutable. La versión anterior publicaba cuatro archivos y omitía el nuevo PNG. Además, al encontrar el mismo commit ya publicado, no lo reparaba.
+
+**Corrección en el repositorio:** el actualizador ahora:
+- exige el PNG en la lista blanca;
+- comprueba y repara archivos faltantes del release existente incluso cuando el commit es igual;
+- copia cambios mediante archivo temporal y renombrado atómico;
+- mantiene los permisos normales para Nginx.
+
+**Aplicar una sola vez en EC2 pequeña**, sin editar configuraciones de Nginx:
+
+```bash
+git -C /tmp/esforzados-install pull --ff-only origin main
+sudo install -o root -g root -m 0755 \
+  /tmp/esforzados-install/deploy/ec2/update.sh \
+  /usr/local/libexec/esforzados-update
+sudo systemctl start esforzados-update.service
+ls -lh /var/www/esforzados/current/assets/carousel-legal.png
+curl -I -H 'Host: preview.50.17.162.57.sslip.io' \
+  http://127.0.0.1/assets/carousel-legal.png
+```
+
+El último comando debe devolver `200 OK` y `Content-Type: image/png`. Si el checkout temporal se eliminó, vuelve a clonarlo en una carpeta temporal nueva, revisa el script y realiza el paso de instalación.
+
+**Importante:** el timer se encarga de publicar en el futuro los cambios de HTML, CSS, JS, SVG y el PNG ya incorporado a la lista blanca. Añadir un **nuevo nombre** de recurso a la lista en el repositorio vuelve a requerir actualizar el ejecutable local o configurar un mecanismo explícito de distribución del updater con revisión de seguridad.
