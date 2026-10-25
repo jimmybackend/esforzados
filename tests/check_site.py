@@ -74,7 +74,7 @@ def check() -> None:
     assert 'href="tel:+525586458862">Esforzados Legal · +52 55 8645 8862</a>' in html
     assert 'href="mailto:soporte@esforzados.com">soporte@esforzados.com</a>' in html
     assert "Servidor privado de Esforzados." in html
-    assert 'class="footer-contact"' in html
+    assert 'class="container footer-contact"' in html
     assert '<div class="container footer-bottom"><small>© <span id="year">2026</span> Esforzados. Todos los derechos reservados.</small></div>' in html
     assert "Tecnología con propósito" not in html
     assert 'href="#legal"' not in html and 'href="#servicios"' not in html
