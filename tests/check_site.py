@@ -58,7 +58,6 @@ def check() -> None:
         elif href.startswith("assets/"):
             assert (ROOT / href.split("?", 1)[0]).is_file(), f"Recurso local ausente: {href}"
 
-    assert "legal.esforzados.com/" not in html, "No enlazar a un portal legal aún inexistente"
     # La portada pública presenta solamente header, carrusel y footer.
     assert html.count("<section ") == 1, "Se espera solamente la sección del carrusel"
     assert '<header class="site-header">' in html and '<footer class="footer">' in html
@@ -66,14 +65,36 @@ def check() -> None:
     assert "NUESTROS SERVICIOS" not in html and "NUESTRA VISIÓN" not in html
     assert "Seguimiento de mi caso" not in html and "Hablemos de lo que" not in html
     assert "Acceso privado en preparación" not in html, "Sección Legal antigua aún presente"
-    assert html.count('data-slide-target="') == 10, "Navegación del encabezado/pie incompleta"
+    # Solo el logo arriba y el copyright centrado abajo; sin menús duplicados.
+    assert 'data-slide-target=' not in html and 'id="menu-principal"' not in html
+    assert '<nav ' not in html and 'menu-toggle' not in html
+    assert 'class="footer-top"' not in html and 'class="brand-footer"' not in html
+    assert html.count("Todos los derechos reservados.") == 1
+    assert '<div class="container footer-bottom"><small>© <span id="year">2026</span> Esforzados. Todos los derechos reservados.</small></div>' in html
+    assert "Tecnología con propósito" not in html
     assert 'href="#legal"' not in html and 'href="#servicios"' not in html
-    assert 'href="#nosotros"' not in html and 'href="#contacto"' not in html
-    assert "mailto:soporte@esforzados.com?subject=Consulta%20Esforzados%20Legal" in html, "Falta acción Legal"
 
-    assert html.count("https://edu.esforzados.com/") >= 1
-    assert html.count("https://drive.esforzados.com/") >= 1
-    assert html.count("https://hub.esforzados.com/") >= 1
+    destinations = (
+        ("legal", "carousel-legal.png", "https://legal.esforzados.com/"),
+        ("drive", "carousel-drive-aws.png", "https://drive.esforzados.com/"),
+        ("hub", "carousel-hub.png", "https://hub.esforzados.com/"),
+        ("chat", "carousel-chat.png", "https://chat.esforzados.com/"),
+        ("edu", "carousel-edu.png", "https://portal.esforzados.com/"),
+    )
+    assert html.count('class="artwork-image-link"') == 5
+    for service, image, destination in destinations:
+        section = html[html.index(f'id="slide-{service}"'):]
+        section = section[:section.index("</article>")]
+        assert re.search(
+            r'<a class="artwork-image-link" href="' + re.escape(destination) +
+            r'"[^>]*>\s*<img src="assets/' + re.escape(image) + r'"[^>]*>\s*</a>',
+            section,
+        ), f"Imagen del carrusel {service} no enlaza a {destination}"
+        assert re.search(r'<a class="button [^"]*" href="' + re.escape(destination) + r'"', section), f"Botón {service} no enlaza al destino esperado"
+
+    css = (ROOT / "assets/site.css").read_text(encoding="utf-8")
+    assert ".footer-bottom {display:flex;align-items:center;justify-content:center;text-align:center;" in css
+    assert ".artwork-image-link {display:block;width:100%;cursor:pointer;}" in css
 
     assert 'src="assets/carousel-legal.png"' in html, "Banner aprobado de Legal no enlazado"
     assert 'src="assets/carousel-drive-aws.png"' in html, "Imagen original de Drive no enlazada"
@@ -85,7 +106,7 @@ def check() -> None:
     assert git_blob == "dd7395d4e030ead572a56c4f498a8ecd94ca02b0", "La imagen AWS S3 no coincide con el original de ArcadeCloud"
     js = (ROOT / "assets/site.js").read_text(encoding="utf-8")
     assert '["Esforzados Legal", "ArcadeCloud Drive", "Esforzados Hub", "Esforzados Chat"' in js, "Anuncios JS del carrusel desordenados"
-    assert 'serviceNavigation.forEach(link => {' in js and 'goToSlide(index);' in js, "Falta navegación por servicio"
+    assert 'serviceNavigation' not in js and 'menu-principal' not in js, "Quedó JavaScript de los menús retirados"
     assert 'src="assets/carousel-hub.png"' in html, "Banner aprobado de Hub no enlazado"
     hub = (ROOT / "assets/carousel-hub.png").read_bytes()
     assert hub.startswith(bytes.fromhex("89504e470d0a1a0a")), "PNG de Hub inválido"
@@ -105,7 +126,7 @@ def check() -> None:
 
     assert html.index('id="slide-chat"') < html.index('id="slide-edu"')
     assert 'Acceso privado Chat' in html
-    assert 'https://edu.esforzados.com/' in html
+    assert 'https://portal.esforzados.com/' in html
     ET.parse(ROOT / "assets/brand.svg")
     updater = (ROOT / "deploy/ec2/update.sh").read_text(encoding="utf-8")
     for filename in ("index.html", "assets/site.css", "assets/site.js", "assets/brand.svg"):

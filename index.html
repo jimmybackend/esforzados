@@ -45,17 +45,7 @@
         <span class="brand-symbol" aria-hidden="true">E<span>✦</span></span>
         <span class="brand-wordmark"><strong>esforzados</strong><small>Personas · Tecnología · Propósito</small></span>
       </a>
-      <button class="menu-toggle" type="button" aria-label="Abrir menú de navegación" aria-controls="menu-principal" aria-expanded="false">
-        <svg class="icon menu-open"><use href="#i-menu"/></svg>
-        <svg class="icon menu-close"><use href="#i-close"/></svg>
-      </button>
-      <nav class="navigation" id="menu-principal" aria-label="Navegación principal">
-        <a href="#inicio" data-slide-target="0">Legal</a>
-        <a href="#inicio" data-slide-target="1">Drive</a>
-        <a href="#inicio" data-slide-target="2">Hub</a>
-        <a href="#inicio" data-slide-target="3">Chat</a>
-        <a class="nav-action" href="#inicio" data-slide-target="4">Edu <svg class="icon"><use href="#i-arrow"/></svg></a>
-      </nav>
+
     </div>
   </header>
 
@@ -69,50 +59,60 @@
           <div class="carousel-stage" id="carousel-stage" aria-live="off">
             <article class="slide slide-legal slide-legal-artwork is-active" id="slide-legal" data-slide="0" aria-roledescription="diapositiva" aria-label="1 de 5: Esforzados Legal">
               <figure class="legal-artwork">
-                <img src="assets/carousel-legal.png" alt="Esforzados Legal: oficina jurídica de estilo caoba con documentos constitucionales y una computadora mostrando ArcadeCloud y Amazon S3. Imagen conceptual de apelaciones, amparo, reconocimiento de inocencia y seguimiento de expedientes." width="1672" height="941" fetchpriority="high" decoding="async">
+                <a class="artwork-image-link" href="https://legal.esforzados.com/" aria-label="Abrir Esforzados Legal">
+                  <img src="assets/carousel-legal.png" alt="Esforzados Legal: oficina jurídica de estilo caoba con documentos constitucionales y una computadora mostrando ArcadeCloud y Amazon S3. Imagen conceptual de apelaciones, amparo, reconocimiento de inocencia y seguimiento de expedientes." width="1672" height="941" fetchpriority="high" decoding="async">
+                </a>
                 <figcaption class="legal-artwork-caption">
                   <span class="legal-artwork-caption-text">Servicios jurídicos y gestión documental. Portal privado de expedientes en desarrollo; la imagen es ilustrativa.</span>
-                  <a class="button button-light legal-artwork-action" href="mailto:soporte@esforzados.com?subject=Consulta%20Esforzados%20Legal">Solicitar información de Legal <svg class="icon"><use href="#i-arrow"/></svg></a>
+                  <a class="button button-light legal-artwork-action" href="https://legal.esforzados.com/">Visitar Esforzados Legal <svg class="icon"><use href="#i-arrow"/></svg></a>
                 </figcaption>
               </figure>
             </article>
 
             <article class="slide slide-drive slide-legal-artwork slide-drive-artwork" id="slide-drive" data-slide="1" aria-roledescription="diapositiva" aria-label="2 de 5: ArcadeCloud Drive" hidden>
               <figure class="legal-artwork drive-artwork">
-                <img src="assets/carousel-drive-aws.png" alt="ArcadeCloud Drive: archivos en Amazon S3 conectados a los servicios AWS Textract, Transcribe, Polly, Translate, Rekognition y Comprehend." width="1916" height="821" loading="lazy" decoding="async">
+                <a class="artwork-image-link" href="https://drive.esforzados.com/" aria-label="Abrir ArcadeCloud Drive">
+                  <img src="assets/carousel-drive-aws.png" alt="ArcadeCloud Drive: archivos en Amazon S3 conectados a los servicios AWS Textract, Transcribe, Polly, Translate, Rekognition y Comprehend." width="1916" height="821" loading="lazy" decoding="async">
+                </a>
                 <figcaption class="legal-artwork-caption drive-artwork-caption">
                   <span class="legal-artwork-caption-text">ArcadeCloud Drive: almacenamiento en Amazon S3 y herramientas de inteligencia artificial de AWS para trabajar con documentos y archivos.</span>
-                  <a class="button button-light legal-artwork-action drive-artwork-action" href="https://drive.esforzados.com/" target="_blank" rel="noopener noreferrer">Explorar ArcadeCloud Drive <svg class="icon"><use href="#i-external"/></svg></a>
+                  <a class="button button-light legal-artwork-action drive-artwork-action" href="https://drive.esforzados.com/">Explorar ArcadeCloud Drive <svg class="icon"><use href="#i-external"/></svg></a>
                 </figcaption>
               </figure>
             </article>
 
             <article class="slide slide-hub slide-legal-artwork slide-hub-artwork" id="slide-hub" data-slide="2" aria-roledescription="diapositiva" aria-label="3 de 5: Esforzados Hub" hidden>
               <figure class="legal-artwork hub-artwork">
-                <img src="assets/carousel-hub.png" alt="Esforzados Hub: flujo empresarial desde la campaña, enlace corto y landing hasta CRM, notificaciones, automatización e inteligencia artificial. Indicadores ilustrativos." width="1916" height="821" loading="lazy" decoding="async">
+                <a class="artwork-image-link" href="https://hub.esforzados.com/" aria-label="Abrir Esforzados Hub">
+                  <img src="assets/carousel-hub.png" alt="Esforzados Hub: flujo empresarial desde la campaña, enlace corto y landing hasta CRM, notificaciones, automatización e inteligencia artificial. Indicadores ilustrativos." width="1916" height="821" loading="lazy" decoding="async">
+                </a>
                 <figcaption class="legal-artwork-caption hub-artwork-caption">
                   <span class="legal-artwork-caption-text">Mail, ERP, landing pages, enlaces cortos, analítica y chat IA. Cifras del gráfico ilustrativas.</span>
-                  <a class="button button-light legal-artwork-action hub-artwork-action" href="https://hub.esforzados.com/" target="_blank" rel="noopener noreferrer">Explorar Hub <svg class="icon"><use href="#i-external"/></svg></a>
+                  <a class="button button-light legal-artwork-action hub-artwork-action" href="https://hub.esforzados.com/">Explorar Hub <svg class="icon"><use href="#i-external"/></svg></a>
                 </figcaption>
               </figure>
             </article>
 
             <article class="slide slide-chat slide-legal-artwork slide-chat-artwork" id="slide-chat" data-slide="3" aria-roledescription="diapositiva" aria-label="4 de 5: Esforzados Chat" hidden>
               <figure class="legal-artwork chat-artwork">
-                <img src="assets/carousel-chat.png" alt="Esforzados Chat: representación conceptual de un espacio privado para abogados, con conversaciones de IA, proyectos, transcripciones JSON y documentos conectados a ArcadeCloud Drive." width="1916" height="821" loading="lazy" decoding="async">
+                <a class="artwork-image-link" href="https://chat.esforzados.com/" aria-label="Abrir Esforzados Chat">
+                  <img src="assets/carousel-chat.png" alt="Esforzados Chat: representación conceptual de un espacio privado para abogados, con conversaciones de IA, proyectos, transcripciones JSON y documentos conectados a ArcadeCloud Drive." width="1916" height="821" loading="lazy" decoding="async">
+                </a>
                 <figcaption class="legal-artwork-caption chat-artwork-caption">
                   <span class="legal-artwork-caption-text">Plataforma privada para equipos autorizados: conversaciones con IA de Amazon Bedrock, análisis de documentos y transcripciones JSON conectados a ArcadeCloud Drive. Imagen conceptual.</span>
-                  <a class="button button-light legal-artwork-action chat-artwork-action" href="https://chat.esforzados.com/" target="_blank" rel="noopener noreferrer">Acceso privado Chat <svg class="icon"><use href="#i-external"/></svg></a>
+                  <a class="button button-light legal-artwork-action chat-artwork-action" href="https://chat.esforzados.com/">Acceso privado Chat <svg class="icon"><use href="#i-external"/></svg></a>
                 </figcaption>
               </figure>
             </article>
 
             <article class="slide slide-edu slide-legal-artwork slide-edu-artwork" id="slide-edu" data-slide="4" aria-roledescription="diapositiva" aria-label="5 de 5: Esforzados Edu" hidden>
               <figure class="legal-artwork edu-artwork">
-                <img src="assets/carousel-edu.png" alt="Esforzados Edu: plataforma académica ilustrativa con administración de alumnos, inscripciones, periodos, materias, tareas, exámenes, calificaciones, boletas y pagos." width="1916" height="821" loading="lazy" decoding="async">
+                <a class="artwork-image-link" href="https://portal.esforzados.com/" aria-label="Abrir Esforzados Edu">
+                  <img src="assets/carousel-edu.png" alt="Esforzados Edu: plataforma académica ilustrativa con administración de alumnos, inscripciones, periodos, materias, tareas, exámenes, calificaciones, boletas y pagos." width="1916" height="821" loading="lazy" decoding="async">
+                </a>
                 <figcaption class="legal-artwork-caption edu-artwork-caption">
                   <span class="legal-artwork-caption-text">Gestión académica para escuelas y diplomados en línea: alumnos, periodos, planes de estudio, tareas, exámenes, boletas y pagos electrónicos. Imagen conceptual.</span>
-                  <a class="button button-light legal-artwork-action edu-artwork-action" href="https://edu.esforzados.com/" target="_blank" rel="noopener noreferrer">Conocer Esforzados Edu <svg class="icon"><use href="#i-external"/></svg></a>
+                  <a class="button button-light legal-artwork-action edu-artwork-action" href="https://portal.esforzados.com/">Conocer Esforzados Edu <svg class="icon"><use href="#i-external"/></svg></a>
                 </figcaption>
               </figure>
             </article>
@@ -139,11 +139,7 @@
   </main>
 
   <footer class="footer">
-    <div class="container footer-top">
-      <a class="brand brand-footer" href="#inicio" aria-label="Volver al inicio de Esforzados"><span class="brand-symbol" aria-hidden="true">E<span>✦</span></span><span class="brand-wordmark"><strong>esforzados</strong><small>Tecnología con propósito</small></span></a>
-      <nav aria-label="Enlaces de pie de página"><a href="#inicio" data-slide-target="0">Legal</a><a href="#inicio" data-slide-target="1">Drive</a><a href="#inicio" data-slide-target="2">Hub</a><a href="#inicio" data-slide-target="3">Chat</a><a href="#inicio" data-slide-target="4">Edu</a><a href="mailto:soporte@esforzados.com">Soporte</a></nav>
-    </div>
-    <div class="container footer-bottom"><small>© <span id="year">2026</span> Esforzados. Todos los derechos reservados.</small><small>El seguimiento privado de expedientes es una función planificada, todavía no disponible.</small></div>
+    <div class="container footer-bottom"><small>© <span id="year">2026</span> Esforzados. Todos los derechos reservados.</small></div>
   </footer>
 </body>
 </html>
