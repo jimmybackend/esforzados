@@ -345,3 +345,9 @@ h1 em,h2 em {font-family:Georgia,Cambria,"Times New Roman",serif;letter-spacing:
 }
 .drive-artwork-caption .legal-artwork-caption-text { color: #e0eef8; }
 .drive-artwork-action { color: #101d2c; }
+
+.slide-hub-artwork { background: #091324; }
+.hub-artwork > img { width: 100%; height: auto; aspect-ratio: 1916 / 821; object-fit: contain; background: #091324; }
+.hub-artwork-caption { background: #0e1725; border-top-color: #23445e; }
+.hub-artwork-caption .legal-artwork-caption-text { color: #ebf2fb; }
+.hub-artwork-action { color: #15202e; }
