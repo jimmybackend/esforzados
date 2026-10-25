@@ -178,3 +178,19 @@ Archivos iniciales de la web institucional:
 5. Desarrollar y auditar Legal antes de habilitar cualquier acceso a documentos reales.
 6. Preparar el despliegue seguro de la nueva portada cuando se apruebe, sin sobrescribir el sitio existente sin respaldo.
 
+
+## 11. Vista previa en la EC2 pequeña con actualización automática
+
+**Propuesta de publicación:** `preview.esforzados.com`, aislado de `esforzados.com` (sitio actual) y `drive.esforzados.com` (ArcadeCloud).
+
+Se agregan scripts de instalación inicial y autoactualización mediante `systemd` y Nginx. La carpeta pública será **`/var/www/esforzados/current`** (enlace al release activo), con fuente privada en `/var/lib/esforzados/repo`. El repositorio público no se coloca directamente bajo el docroot.
+
+- Manual completo: [Despliegue en EC2](deploy/ec2/README.md).
+- Instalación inicial: `deploy/ec2/install.sh` (requiere ejecución autorizada en la EC2).
+- Actualizaciones periódicas: `deploy/ec2/update.sh`, servicio y timer con usuario sin privilegios.
+- **Cambiar desde la web:** crear/editar PR en GitHub y fusionar a `main`. La EC2 revisa la rama aproximadamente cada cinco minutos y publica una copia estática limitada a HTML, CSS, JS y SVG.
+- **No se utiliza** el puente de estado de EC2 como ejecutor de comandos remotos ni se expone un webhook PHP.
+- El sitio de prueba será público y no tiene autenticación ni datos de expedientes.
+- **Estado de esta etapa:** configuración y código añadidos al repositorio. **La instalación real en la EC2, DNS y HTTPS no están confirmados**.
+
+Antes de exponer el subdominio deben comprobarse la IP pública actual, los servicios Nginx existentes, la resolución DNS y el certificado HTTPS.
