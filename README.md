@@ -245,3 +245,12 @@ La imagen y la diapositiva se encuentran en el **portal principal**. No se cambi
 - **Origen y revisión:** imagen aprobada por el usuario; copia privada de diseño en Google Drive. Integrada por GitHub Blob SHA `65b98f63b809bcc03b1360e3652b6bf196623898`.
 - **EC2:** el actualizador instalado que admite `assets/carousel-*.png` publicará este archivo automáticamente tras fusionar en `main`. Verificar que el servicio use la versión nueva; de lo contrario actualizar el ejecutable una sola vez.
 
+
+## 14. Carruseles Chat privado y Edu
+
+**Orden final autorizado:** Legal → Drive → Hub → **Chat** → **Edu**.
+
+- **Chat:** `assets/carousel-chat.png` (1916 × 821), Git blob `cc096d418be6c23ec282ccd90ab4b611a5183aba`. Plataforma privada para equipos autorizados que utiliza IA de Amazon Bedrock y archivos de ArcadeCloud Drive, proyectos y transcripciones JSON. El diseño es conceptual, no contiene casos reales. CTA hacia `https://chat.esforzados.com/` (acceso privado).
+- **Edu:** `assets/carousel-edu.png` (1916 × 821), Git blob `bee20aa889e64e5a904bee4a54b72f9463026fd2`. Plataforma académica para escuelas y diplomados en línea, con alumnos, calendarios académicos, programas de estudio, tareas, exámenes, boletas y pagos. CTA hacia `https://edu.esforzados.com/`.
+- **Origen:** diseños generados y aprobados, subidos a Google Drive `Developer/Esforzados/Disenos Carrusel/` e importados a blobs GitHub conservando sus bytes exactos.
+- **Actualización EC2:** el script existente acepta `assets/carousel-*.png`, por lo que los nuevos banners se publican mediante `esforzados-update.service` sin cambiar Nginx ni otros servicios. La ilustración de Chat no implica acceso público a archivos ni conversaciones.

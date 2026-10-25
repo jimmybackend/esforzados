@@ -351,3 +351,16 @@ h1 em,h2 em {font-family:Georgia,Cambria,"Times New Roman",serif;letter-spacing:
 .hub-artwork-caption { background: #0e1725; border-top-color: #23445e; }
 .hub-artwork-caption .legal-artwork-caption-text { color: #ebf2fb; }
 .hub-artwork-action { color: #15202e; }
+
+/* Chat privado y Edu: imágenes aprobadas completas, con pie oscuro y responsivo. */
+.slide-chat-artwork,.slide-edu-artwork { background: #160f0c; }
+.chat-artwork > img,.edu-artwork > img {
+  display: block; width: 100%; height: auto; aspect-ratio: 1916 / 821;
+  object-fit: contain; background: #160f0c;
+}
+.chat-artwork-caption,.edu-artwork-caption {
+  background: #18110e; border-top-color: rgba(217,173,124,.34);
+}
+.chat-artwork-caption .legal-artwork-caption-text,
+.edu-artwork-caption .legal-artwork-caption-text { color: #efe3d8; }
+.chat-artwork-action,.edu-artwork-action { color: #231712; }
