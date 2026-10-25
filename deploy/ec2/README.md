@@ -139,3 +139,32 @@ Si el proyecto incorpora más archivos necesarios, habrá que ampliar expresamen
 - [ ] Revisar la portada antes de cambiar el dominio principal `esforzados.com`.
 
 > El puente existente en `jimmybackend/s3` dispone de workflow de **estado EC2**, no de ejecución remota de comandos. Estos scripts evitan ampliar el alcance de ese puente o emplear el rol IAM de administración completa para desplegar una web estática.
+
+## Corrección de permisos de la primera instalación (25 de octubre de 2026)
+
+Si Nginx informa `Permission denied (13)` en `/var/www/esforzados/current/index.html`, comprobar:
+
+```bash
+sudo ls -ld "$(readlink -f /var/www/esforzados/current)"
+```
+
+El instalador inicial creó un directorio temporal con `mktemp -d` (modo `0700`) y lo trasladó al release. Los archivos son `0644`, pero el directorio necesita `0755` para que Nginx pueda recorrerlo.
+
+**Solución puntual, sin cambiar otros sitios ni permisos recursivos:**
+
+```bash
+sudo chmod 755 "$(readlink -f /var/www/esforzados/current)"
+curl -I -H 'Host: preview.esforzados.com' http://127.0.0.1/index.html
+```
+
+**Solución permanente:** `deploy/ec2/update.sh` ahora asigna `0755` a las carpetas del release al crearlo y corrige versiones previas. Como el instalador deja una copia independiente del actualizador en `/usr/local/libexec/esforzados-update`, actualizar el repositorio **no sustituye automáticamente ese ejecutable instalado**. Para actualizarlo en EC2 tras fusionar este arreglo:
+
+```bash
+git -C /tmp/esforzados-install pull --ff-only origin main
+sudo install -o root -g root -m 0755 /tmp/esforzados-install/deploy/ec2/update.sh /usr/local/libexec/esforzados-update
+sudo systemctl start esforzados-update.service
+```
+
+Si `/tmp/esforzados-install` ya no está disponible, descargar una copia nueva a un directorio temporal vacío antes del comando `sudo install`. **No ejecutar `install.sh` otra vez sólo para corregir permisos**, ni ejecutar `chmod -R` sobre `/var/www`.
+
+La prueba HTTP con cabecera Host verifica únicamente el bloque virtual de Esforzados; cualquier cambio de DNS o nombre de host se maneja por separado. El sitio sigue siendo un **preview público sin datos de expedientes**.
