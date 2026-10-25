@@ -5,7 +5,7 @@
   const slides = carousel ? Array.from(carousel.querySelectorAll(".slide")) : [];
   const dots = carousel ? Array.from(carousel.querySelectorAll(".carousel-dot")) : [];
   const announcement = document.getElementById("carousel-announcement");
-  const names = ["Esforzados Legal", "ArcadeCloud Drive", "Esforzados Hub", "Esforzados Edu", "Esforzados Chat"];
+  const names = ["Esforzados Legal", "ArcadeCloud Drive", "Esforzados Hub", "Esforzados Chat", "Esforzados Edu"];
   let active = 0;
   let timer = null;
   let touchStartX = null;
