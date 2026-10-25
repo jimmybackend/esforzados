@@ -50,11 +50,11 @@
         <svg class="icon menu-close"><use href="#i-close"/></svg>
       </button>
       <nav class="navigation" id="menu-principal" aria-label="Navegación principal">
-        <a href="#servicios">Servicios</a>
-        <a href="#legal">Esforzados Legal</a>
-        <a href="#nosotros">Nosotros</a>
-        <a href="#contacto">Contacto</a>
-        <a class="nav-action" href="#legal">Mi expediente <svg class="icon"><use href="#i-arrow"/></svg></a>
+        <a href="#inicio" data-slide-target="0">Legal</a>
+        <a href="#inicio" data-slide-target="1">Drive</a>
+        <a href="#inicio" data-slide-target="2">Hub</a>
+        <a href="#inicio" data-slide-target="3">Chat</a>
+        <a class="nav-action" href="#inicio" data-slide-target="4">Edu <svg class="icon"><use href="#i-arrow"/></svg></a>
       </nav>
     </div>
   </header>
@@ -63,13 +63,7 @@
     <section class="hero" id="inicio" aria-labelledby="hero-intro">
       <div class="hero-backdrop" aria-hidden="true"></div>
       <div class="container">
-        <div class="hero-heading">
-          <span class="eyebrow eyebrow-light"><span class="eyebrow-line"></span> UN ECOSISTEMA, DIFERENTES CAMINOS</span>
-          <div class="hero-heading-row">
-            <h1 id="hero-intro">La tecnología tiene sentido <em>cuando está a tu servicio.</em></h1>
-            <p>En Esforzados reunimos herramientas para aprender, organizar, documentar y avanzar. Descubre el servicio que necesitas.</p>
-          </div>
-        </div>
+        <h1 class="sr-only" id="hero-intro">Esforzados: nuestras plataformas</h1>
 
         <div class="carousel" aria-label="Carrusel de servicios Esforzados" aria-roledescription="carrusel">
           <div class="carousel-stage" id="carousel-stage" aria-live="off">
@@ -78,7 +72,7 @@
                 <img src="assets/carousel-legal.png" alt="Esforzados Legal: oficina jurídica de estilo caoba con documentos constitucionales y una computadora mostrando ArcadeCloud y Amazon S3. Imagen conceptual de apelaciones, amparo, reconocimiento de inocencia y seguimiento de expedientes." width="1672" height="941" fetchpriority="high" decoding="async">
                 <figcaption class="legal-artwork-caption">
                   <span class="legal-artwork-caption-text">Servicios jurídicos y gestión documental. Portal privado de expedientes en desarrollo; la imagen es ilustrativa.</span>
-                  <a class="button button-light legal-artwork-action" href="#legal">Conocer Esforzados Legal <svg class="icon"><use href="#i-arrow"/></svg></a>
+                  <a class="button button-light legal-artwork-action" href="mailto:soporte@esforzados.com?subject=Consulta%20Esforzados%20Legal">Solicitar información de Legal <svg class="icon"><use href="#i-arrow"/></svg></a>
                 </figcaption>
               </figure>
             </article>
@@ -139,81 +133,15 @@
           </div>
           <p class="sr-only" id="carousel-announcement" aria-live="polite" aria-atomic="true"></p>
         </div>
-        <div class="hero-bottom"><span>TECNOLOGÍA CON PROPÓSITO</span><span>Explora nuestras soluciones <svg class="icon"><use href="#i-arrow"/></svg></span></div>
       </div>
     </section>
 
-    <section class="section section-services" id="servicios" aria-labelledby="servicios-titulo">
-      <div class="container">
-        <div class="section-topline"><span>01 / NUESTROS SERVICIOS</span><span>CINCO CAMINOS, UN MISMO COMPROMISO</span></div>
-        <div class="section-intro">
-          <h2 id="servicios-titulo">Herramientas para cada <em>etapa de tu camino.</em></h2>
-          <p>Cada servicio tiene su propio espacio, su propia función y una forma diferente de ayudarte a avanzar.</p>
-        </div>
-        <div class="service-grid">
-          <a class="service-card service-card-legal" href="#legal"><span class="service-icon"><svg class="icon"><use href="#i-scale"/></svg></span><span class="service-index">01</span><h3>Esforzados Legal</h3><p>Gestión documental y seguimiento de expedientes con acceso para personas autorizadas.</p><span class="service-link">Conocer el proyecto <svg class="icon"><use href="#i-arrow"/></svg></span></a>
-          <a class="service-card" href="https://edu.esforzados.com/" target="_blank" rel="noopener noreferrer"><span class="service-icon"><svg class="icon"><use href="#i-cap"/></svg></span><span class="service-index">02</span><h3>Esforzados Edu</h3><p>Plataforma educativa y recursos para aprender desde cualquier lugar.</p><span class="service-link">Visitar Edu <svg class="icon"><use href="#i-external"/></svg></span></a>
-          <a class="service-card" href="https://drive.esforzados.com/" target="_blank" rel="noopener noreferrer"><span class="service-icon"><svg class="icon"><use href="#i-cloud"/></svg></span><span class="service-index">03</span><h3>ArcadeCloud Drive</h3><p>Archivos, documentos y herramientas de almacenamiento en la nube.</p><span class="service-link">Visitar Drive <svg class="icon"><use href="#i-external"/></svg></span></a>
-          <a class="service-card" href="https://hub.esforzados.com/" target="_blank" rel="noopener noreferrer"><span class="service-icon"><svg class="icon"><use href="#i-grid"/></svg></span><span class="service-index">04</span><h3>Esforzados Hub</h3><p>Aplicaciones para apoyar la organización y operación empresarial.</p><span class="service-link">Visitar Hub <svg class="icon"><use href="#i-external"/></svg></span></a>
-          <a class="service-card" href="https://chat.esforzados.com/" target="_blank" rel="noopener noreferrer"><span class="service-icon"><svg class="icon"><use href="#i-chat"/></svg></span><span class="service-index">05</span><h3>Esforzados Chat</h3><p>Conversaciones, proyectos y herramientas de inteligencia artificial.</p><span class="service-link">Visitar Chat <svg class="icon"><use href="#i-external"/></svg></span></a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section legal-feature" id="legal" aria-labelledby="legal-titulo">
-      <div class="container legal-layout">
-        <div class="legal-copy">
-          <span class="eyebrow"><span class="eyebrow-line"></span> 02 / ESFORZADOS LEGAL</span>
-          <h2 id="legal-titulo">Un expediente. Una historia. <em>Información clara.</em></h2>
-          <p class="lead">Estamos construyendo un espacio privado para que cada cliente y sus familiares autorizados conozcan las actividades registradas de su caso y consulten los documentos que se autoricen para ese expediente.</p>
-          <div class="feature-list">
-            <div><span class="feature-icon"><svg class="icon"><use href="#i-file"/></svg></span><div><h3>Documentación organizada</h3><p>Escritos, resoluciones, imágenes, audios y transcripciones, después de su revisión y publicación.</p></div></div>
-            <div><span class="feature-icon"><svg class="icon"><use href="#i-clock"/></svg></span><div><h3>Seguimiento con evidencia</h3><p>Una línea de tiempo que distinga las actuaciones judiciales del trabajo documental realizado por nuestro equipo.</p></div></div>
-            <div><span class="feature-icon"><svg class="icon"><use href="#i-shield"/></svg></span><div><h3>Acceso de familiares autorizados</h3><p>Cada persona autorizada verá todo el contenido publicado de su expediente, nunca los documentos internos ni los de otras personas.</p></div></div>
-          </div>
-          <div class="planned-notice"><svg class="icon"><use href="#i-lock"/></svg><p><strong>Acceso privado en preparación.</strong> El sitio informativo aún no permite iniciar sesión ni consultar expedientes. No compartas datos sensibles en esta página.</p></div>
-        </div>
-        <div class="legal-preview" aria-label="Vista conceptual del futuro panel legal, sin datos reales">
-          <div class="preview-bar"><div class="preview-brand"><svg class="icon"><use href="#i-scale"/></svg><span>Esforzados <strong>Legal</strong></span></div><span class="preview-badge">VISTA CONCEPTUAL</span></div>
-          <div class="preview-body">
-            <div class="preview-overline">MI EXPEDIENTE</div>
-            <h3>Seguimiento de mi caso</h3>
-            <p>Ejemplo de la información que podrá consultar una persona autorizada.</p>
-            <div class="preview-stats">
-              <div><svg class="icon"><use href="#i-file"/></svg><strong>Documentos</strong><span>Archivos publicados</span></div>
-              <div><svg class="icon"><use href="#i-clock"/></svg><strong>Actividad</strong><span>Historial del caso</span></div>
-            </div>
-            <div class="preview-timeline">
-              <span class="timeline-title">EJEMPLO DE SEGUIMIENTO</span>
-              <div class="timeline-row"><span class="timeline-mark"><svg class="icon"><use href="#i-check"/></svg></span><div><strong>Solicitud presentada</strong><small>Actividad documental registrada</small></div></div>
-              <div class="timeline-row"><span class="timeline-mark"><svg class="icon"><use href="#i-check"/></svg></span><div><strong>Documento recibido</strong><small>Disponible tras revisión</small></div></div>
-              <div class="timeline-row"><span class="timeline-mark pending"><svg class="icon"><use href="#i-clock"/></svg></span><div><strong>Trabajo en revisión</strong><small>Aún no publicado</small></div></div>
-            </div>
-          </div>
-          <div class="preview-foot"><svg class="icon"><use href="#i-shield"/></svg> Sin datos de clientes ni expedientes reales</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section philosophy" id="nosotros" aria-labelledby="nosotros-titulo">
-      <div class="container philosophy-layout">
-        <div><span class="eyebrow"><span class="eyebrow-line"></span> 03 / NUESTRA VISIÓN</span><h2 id="nosotros-titulo">Distintas plataformas. <em>Un mismo propósito.</em></h2></div>
-        <div><p>Esforzados nació del compromiso con el aprendizaje y sigue creciendo en servicios de organización, documentación, nube e inteligencia artificial.</p><p>Queremos que la tecnología sea útil, comprensible y respetuosa con la información de las personas. Cada plataforma conserva su función, mientras Esforzados es el punto de partida para conocerlas.</p><a class="inline-link" href="#servicios">Explorar servicios <svg class="icon"><use href="#i-arrow"/></svg></a></div>
-      </div>
-    </section>
-
-    <section class="contact" id="contacto" aria-labelledby="contacto-titulo">
-      <div class="container contact-inner">
-        <div><span class="eyebrow eyebrow-light"><span class="eyebrow-line"></span> 04 / CONTACTO</span><h2 id="contacto-titulo">Hablemos de lo que <em>necesitas construir.</em></h2><p>¿Quieres conocer más sobre nuestras plataformas y servicios? Escríbenos y cuéntanos cómo podemos ayudarte.</p></div>
-        <a class="button button-light" href="mailto:soporte@esforzados.com?subject=Consulta%20desde%20Esforzados">Contactar a Esforzados <svg class="icon"><use href="#i-arrow"/></svg></a>
-      </div>
-    </section>
   </main>
 
   <footer class="footer">
     <div class="container footer-top">
       <a class="brand brand-footer" href="#inicio" aria-label="Volver al inicio de Esforzados"><span class="brand-symbol" aria-hidden="true">E<span>✦</span></span><span class="brand-wordmark"><strong>esforzados</strong><small>Tecnología con propósito</small></span></a>
-      <nav aria-label="Enlaces de pie de página"><a href="#servicios">Servicios</a><a href="#legal">Legal</a><a href="#nosotros">Nosotros</a><a href="mailto:soporte@esforzados.com">Soporte</a></nav>
+      <nav aria-label="Enlaces de pie de página"><a href="#inicio" data-slide-target="0">Legal</a><a href="#inicio" data-slide-target="1">Drive</a><a href="#inicio" data-slide-target="2">Hub</a><a href="#inicio" data-slide-target="3">Chat</a><a href="#inicio" data-slide-target="4">Edu</a><a href="mailto:soporte@esforzados.com">Soporte</a></nav>
     </div>
     <div class="container footer-bottom"><small>© <span id="year">2026</span> Esforzados. Todos los derechos reservados.</small><small>El seguimiento privado de expedientes es una función planificada, todavía no disponible.</small></div>
   </footer>

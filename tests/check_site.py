@@ -59,7 +59,18 @@ def check() -> None:
             assert (ROOT / href.split("?", 1)[0]).is_file(), f"Recurso local ausente: {href}"
 
     assert "legal.esforzados.com/" not in html, "No enlazar a un portal legal aún inexistente"
-    assert "Acceso privado en preparación" in html, "Falta advertencia de portal legal no disponible"
+    # La portada pública presenta solamente header, carrusel y footer.
+    assert html.count("<section ") == 1, "Se espera solamente la sección del carrusel"
+    assert '<header class="site-header">' in html and '<footer class="footer">' in html
+    assert '<h1 class="sr-only" id="hero-intro">' in html, "Falta título accesible"
+    assert "NUESTROS SERVICIOS" not in html and "NUESTRA VISIÓN" not in html
+    assert "Seguimiento de mi caso" not in html and "Hablemos de lo que" not in html
+    assert "Acceso privado en preparación" not in html, "Sección Legal antigua aún presente"
+    assert html.count('data-slide-target="') == 10, "Navegación del encabezado/pie incompleta"
+    assert 'href="#legal"' not in html and 'href="#servicios"' not in html
+    assert 'href="#nosotros"' not in html and 'href="#contacto"' not in html
+    assert "mailto:soporte@esforzados.com?subject=Consulta%20Esforzados%20Legal" in html, "Falta acción Legal"
+
     assert html.count("https://edu.esforzados.com/") >= 1
     assert html.count("https://drive.esforzados.com/") >= 1
     assert html.count("https://hub.esforzados.com/") >= 1
@@ -74,6 +85,7 @@ def check() -> None:
     assert git_blob == "dd7395d4e030ead572a56c4f498a8ecd94ca02b0", "La imagen AWS S3 no coincide con el original de ArcadeCloud"
     js = (ROOT / "assets/site.js").read_text(encoding="utf-8")
     assert '["Esforzados Legal", "ArcadeCloud Drive", "Esforzados Hub", "Esforzados Chat"' in js, "Anuncios JS del carrusel desordenados"
+    assert 'serviceNavigation.forEach(link => {' in js and 'goToSlide(index);' in js, "Falta navegación por servicio"
     assert 'src="assets/carousel-hub.png"' in html, "Banner aprobado de Hub no enlazado"
     hub = (ROOT / "assets/carousel-hub.png").read_bytes()
     assert hub.startswith(bytes.fromhex("89504e470d0a1a0a")), "PNG de Hub inválido"
