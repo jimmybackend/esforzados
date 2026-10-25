@@ -47,7 +47,7 @@ fi
 
 # LISTA BLANCA: nunca publicar .git, secretos, deploy/, workflows ni archivos
 # que se agreguen accidentalmente al repositorio.
-readonly files=("index.html" "assets/site.css" "assets/site.js" "assets/brand.svg")
+readonly files=("index.html" "assets/site.css" "assets/site.js" "assets/brand.svg" "assets/carousel-legal.png")
 for file in "${files[@]}"; do
   [[ -f "$REPO_DIR/$file" && ! -L "$REPO_DIR/$file" ]] || fail "Archivo inválido o enlace simbólico: $file"
 done
