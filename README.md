@@ -194,3 +194,29 @@ Se agregan scripts de instalación inicial y autoactualización mediante `system
 - **Estado de esta etapa:** configuración y código añadidos al repositorio. **La instalación real en la EC2, DNS y HTTPS no están confirmados**.
 
 Antes de exponer el subdominio deben comprobarse la IP pública actual, los servicios Nginx existentes, la resolución DNS y el certificado HTTPS.
+
+## 12. Carrusel Legal — imagen aprobada y puente Google Drive
+
+- **Diseño aprobado:** escena profesional en negro, blanco y caoba con documentación jurídica, símbolos institucionales y una computadora mostrando los servicios de ArcadeCloud/Amazon S3.
+- **Fuente de revisión en Google Drive:** `Developer/Esforzados/Disenos Carrusel/carousel-legal.png`.
+- **Activo web en este repositorio:** `assets/carousel-legal.png` (PNG original 1672 × 941).
+- La diapositiva de Legal muestra la ilustración completa y ofrece el enlace a su sección informativa. En pantallas pequeñas se preserva la imagen y se presenta texto accesible debajo.
+- **No existe todavía un portal de expedientes operativo.** El contenido de la imagen es ilustrativo y no acredita movimientos de casos, consultas en tiempo real ni documentos publicados.
+- El actualizador de EC2 usa una **lista blanca** de archivos. Se añadió `assets/carousel-legal.png` a `deploy/ec2/update.sh`.
+
+### Actualizar el ejecutable instalado en EC2 (una vez)
+
+El código de `deploy/ec2/update.sh` se almacena en GitHub, pero el servidor lo ejecuta desde una copia instalada en `/usr/local/libexec/esforzados-update`. Los cambios a esa copia **no se instalan automáticamente por el timer**. Para que el servidor publique también la imagen después de la fusión:
+
+```bash
+# En la EC2, usando el checkout temporal creado durante la instalación:
+git -C /tmp/esforzados-install pull --ff-only origin main
+sudo install -o root -g root -m 0755 \
+  /tmp/esforzados-install/deploy/ec2/update.sh \
+  /usr/local/libexec/esforzados-update
+sudo systemctl start esforzados-update.service
+sudo systemctl status esforzados-update.service --no-pager
+ls -lh /var/www/esforzados/current/assets/carousel-legal.png
+```
+
+A partir de esa actualización del ejecutable, los cambios de contenido y esa imagen se publican periódicamente al fusionar en `main`; no hay que modificar otras configuraciones de Nginx o de ArcadeCloud. Para nuevos tipos de archivos será necesario revisar y ampliar la lista blanca de forma controlada.
