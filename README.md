@@ -2,7 +2,7 @@
 
 **Dominio principal:** https://esforzados.com/  
 **Repositorio:** `jimmybackend/esforzados`  
-**Estado:** diseño y definición de arquitectura; **sin implementación aprobada**.  
+**Estado:** portada pública inicial implementada en el repositorio; **sin despliegue a producción ni backend legal**.  
 **Última actualización de decisiones:** 25 de octubre de 2026.
 
 ## 1. Visión
@@ -11,13 +11,13 @@ Transformar `esforzados.com` en la puerta de entrada clara, profesional y accesi
 
 La portada tendrá un **carrusel de cinco servicios**, navegación clara, información institucional y un acceso destacado a «Consultar mi expediente». El portal principal presentará y enlazará los servicios, sin concentrar innecesariamente su código ni acceder directamente a los datos legales.
 
-**No se sustituye ni modifica el funcionamiento de los servicios existentes durante esta etapa de diseño.**
+**Los sistemas existentes siguen independientes.** Esta primera implementación es una portada pública estática; no modifica sus servicios ni contiene información privada.
 
 ## 2. Mapa de servicios
 
 | Servicio | Dirección | Proyecto o repositorio | Situación |
 | --- | --- | --- | --- |
-| Portal principal | https://esforzados.com/ | `jimmybackend/esforzados` | Repositorio existente; diseño por definir |
+| Portal principal | https://esforzados.com/ | `jimmybackend/esforzados` | Portada inicial implementada en el repositorio; despliegue pendiente |
 | Esforzados Legal | `https://legal.esforzados.com/` | Repositorio independiente propuesto: `jimmybackend/esforzados-legal` | Propuesta; sin crear ni desplegar |
 | Esforzados Edu | https://portal.esforzados.com/ | Repositorio por identificar | Servicio existente; sin cambios |
 | ArcadeCloud Drive | https://drive.esforzados.com/ | `jimmybackend/s3` | Servicio existente; sin cambios |
@@ -139,9 +139,42 @@ Este documento registra decisiones de producto y arquitectura. **No constituye e
 - [ ] Definir estados y vocabulario del seguimiento judicial y del trabajo documental.
 - [ ] Definir política de documentos sensibles, conservación, auditoría y descargas.
 - [ ] Evaluar integraciones reales con ArcadeCloud, MiChat y autenticación de Hub.
-- [ ] Elaborar diseños de pantallas y flujos antes de escribir código.
+- [x] Implementar primera portada y carrusel público como base de diseño; revisar la apariencia tras un despliegue de prueba.
+- [ ] Elaborar diseños de pantallas y flujos del **backend de Legal** antes de escribir código.
 - [ ] Revisar técnicamente dependencias y seguridad antes de autorizar implementación.
 
 ---
 
 > **Regla de trabajo:** primero comprender y aprobar el diseño; después, y solo con autorización, programar, probar e implementar.
+
+## 10. Primera implementación de la portada (25 de octubre de 2026)
+
+Archivos iniciales de la web institucional:
+
+| Archivo | Función |
+| --- | --- |
+| `index.html` | Portada pública, carrusel de cinco servicios, tarjetas y presentación conceptual de Esforzados Legal |
+| `assets/site.css` | Diseño adaptable a móvil, tablet y escritorio, colores y estilos |
+| `assets/site.js` | Carrusel navegable por botones, teclado y gestos táctiles; menú móvil |
+| `assets/brand.svg` | Ícono SVG local |
+
+### Estado y límites
+
+- La página del repositorio puede abrirse como sitio estático; no requiere PHP, base de datos ni credenciales.
+- El carrusel presenta **Legal, Edu, Drive, Hub y Chat**. Los vínculos de los servicios existentes apuntan a sus dominios; su disponibilidad real debe comprobarse independientemente.
+- Legal usa un enlace dentro de la propia portada (`#legal`), **no un login ficticio ni un enlace al subdominio que aún no se ha desplegado**.
+- La sección de expediente es **una representación ilustrativa**, sin nombres, causas ni archivos reales. No permite acceso a ningún expediente.
+- El contacto usa un enlace `mailto:`, sin formularios que recojan información sensible.
+- Esta versión no crea ni modifica un sistema de autenticación, permisos, expedientes o APIs.
+- El repositorio **no está conectado automáticamente a la publicación de `esforzados.com`**. Fusionar una rama en `main` no significa desplegar la portada en el hosting.
+- Antes de conectar el dominio, validar hosting, document root, certificados HTTPS, rutas y copia de seguridad de la web actual para un despliegue reversible.
+
+### Siguientes fases
+
+1. Revisar la portada en pantalla de computadora y de teléfono.
+2. Validar la identidad visual definitiva, textos institucionales y datos de contacto.
+3. Definir y crear, mediante autorización específica, el repositorio de Esforzados Legal.
+4. Diseñar identidad, gestión de clientes, autorizaciones por expediente y revisión/publicación de documentos.
+5. Desarrollar y auditar Legal antes de habilitar cualquier acceso a documentos reales.
+6. Preparar el despliegue seguro de la nueva portada cuando se apruebe, sin sobrescribir el sitio existente sin respaldo.
+
