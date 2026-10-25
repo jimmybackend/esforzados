@@ -70,7 +70,7 @@ def check() -> None:
     drive = (ROOT / "assets/carousel-drive-aws.png").read_bytes()
     assert drive.startswith(bytes.fromhex("89504e470d0a1a0a")), "PNG original de Drive inválido"
     assert struct.unpack(">II", drive[16:24]) == (1916, 821), "Dimensiones de original AWS S3 inesperadas"
-    git_blob = hashlib.sha1(b"blob " + str(len(drive)).encode() + b"\\0" + drive).hexdigest()
+    git_blob = hashlib.sha1(b"blob " + str(len(drive)).encode() + bytes([0]) + drive).hexdigest()
     assert git_blob == "dd7395d4e030ead572a56c4f498a8ecd94ca02b0", "La imagen AWS S3 no coincide con el original de ArcadeCloud"
     js = (ROOT / "assets/site.js").read_text(encoding="utf-8")
     assert '["Esforzados Legal", "ArcadeCloud Drive", "Esforzados Edu"' in js, "Anuncios JS del carrusel desordenados"
