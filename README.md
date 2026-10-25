@@ -22,7 +22,7 @@ La portada tendrá un **carrusel de cinco servicios**, navegación clara, inform
 | Esforzados Edu | https://portal.esforzados.com/ | Repositorio por identificar | Servicio existente; sin cambios |
 | ArcadeCloud Drive | https://drive.esforzados.com/ | `jimmybackend/s3` | Servicio existente; sin cambios |
 | Esforzados Hub | https://hub.esforzados.com/ | `jimmybackend/hub-esforzados` (privado) | Servicio existente; sin cambios |
-| Esforzados Chat | Dominio por confirmar | Proyecto existente de chat/IA por vincular | Integración por definir |
+| Esforzados Chat | https://chat.esforzados.com/ (documentado; disponibilidad por verificar) | Proyecto MiChat/Chat por confirmar como responsable del despliegue | Enlace incluido en portada; integración pendiente |
 
 Los enlaces y dominios propuestos no implican que las nuevas aplicaciones ya estén funcionando.
 
@@ -133,7 +133,7 @@ Este documento registra decisiones de producto y arquitectura. **No constituye e
 ## 9. Pendientes de diseño
 
 - [ ] Definir identidad gráfica y contenido específico del carrusel.
-- [ ] Identificar y confirmar el repositorio de Edu y la ubicación definitiva de Chat.
+- [ ] Identificar el repositorio de Edu, comprobar la disponibilidad de `chat.esforzados.com` y confirmar el proyecto responsable de su despliegue.
 - [ ] Diseñar el registro e invitación de clientes y familiares y cómo verificar autorizaciones.
 - [ ] Definir quién puede publicar, revisar y revocar contenido en Legal.
 - [ ] Definir estados y vocabulario del seguimiento judicial y del trabajo documental.
