@@ -12,7 +12,7 @@ import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "index.html"
-FILES = ("index.html", "assets/site.css", "assets/site.js", "assets/brand.svg", "assets/carousel-legal.png", "assets/carousel-drive-aws.png")
+FILES = ("index.html", "assets/site.css", "assets/site.js", "assets/brand.svg", "assets/carousel-legal.png", "assets/carousel-drive-aws.png", "assets/carousel-hub.png")
 
 
 class Page(HTMLParser):
@@ -48,7 +48,7 @@ def check() -> None:
     assert len(set(page.ids)) == len(page.ids), "IDs HTML duplicados"
     assert len(page.slides) == 5, "Se necesitan cinco diapositivas"
     assert len(page.controls) == 5, "Se necesitan cinco botones"
-    assert page.slides == ["slide-legal", "slide-drive", "slide-edu", "slide-hub", "slide-chat"], "Orden esperado: Legal, Drive, Edu, Hub, Chat"
+    assert page.slides == ["slide-legal", "slide-drive", "slide-hub", "slide-edu", "slide-chat"], "Orden esperado: Legal, Drive, Edu, Hub, Chat"
     assert [control for control, _ in page.controls] == page.slides, "Controles desordenados respecto a diapositivas"
     assert sorted(int(i) for _, i in page.controls) == list(range(5)), "Índices del carrusel inválidos"
 
@@ -73,7 +73,13 @@ def check() -> None:
     git_blob = hashlib.sha1(b"blob " + str(len(drive)).encode() + bytes([0]) + drive).hexdigest()
     assert git_blob == "dd7395d4e030ead572a56c4f498a8ecd94ca02b0", "La imagen AWS S3 no coincide con el original de ArcadeCloud"
     js = (ROOT / "assets/site.js").read_text(encoding="utf-8")
-    assert '["Esforzados Legal", "ArcadeCloud Drive", "Esforzados Edu"' in js, "Anuncios JS del carrusel desordenados"
+    assert '["Esforzados Legal", "ArcadeCloud Drive", "Esforzados Hub", "Esforzados Edu"' in js, "Anuncios JS del carrusel desordenados"
+    assert 'src="assets/carousel-hub.png"' in html, "Banner aprobado de Hub no enlazado"
+    hub = (ROOT / "assets/carousel-hub.png").read_bytes()
+    assert hub.startswith(bytes.fromhex("89504e470d0a1a0a")), "PNG de Hub inválido"
+    assert struct.unpack(">II", hub[16:24]) == (1916, 821), "Dimensiones del banner Hub incorrectas"
+    hub_blob = hashlib.sha1(b"blob " + str(len(hub)).encode() + bytes([0]) + hub).hexdigest()
+    assert hub_blob == "65b98f63b809bcc03b1360e3652b6bf196623898", "El banner Hub no coincide con la versión aprobada"
     ET.parse(ROOT / "assets/brand.svg")
     updater = (ROOT / "deploy/ec2/update.sh").read_text(encoding="utf-8")
     for filename in ("index.html", "assets/site.css", "assets/site.js", "assets/brand.svg"):

@@ -223,7 +223,7 @@ A partir de esa actualización del ejecutable, los cambios de contenido y esa im
 
 ## 12. Carrusel con imagen original de ArcadeCloud Drive
 
-**Orden aprobado del carrusel principal:** Legal → **Drive** → Edu → Hub → Chat.
+**Orden actualizado del carrusel principal:** Legal → **Drive** → **Hub** → Edu → Chat.
 
 - **Segunda diapositiva:** imagen original de ArcadeCloud, mostrando Amazon S3 y servicios AWS; no se recreó ni modificó.
 - **Fuente verificada:** repositorio `jimmybackend/s3`, archivo `drive/images/home/carousel-01-s3-aws.png`, commit de referencia main al importar.
@@ -235,3 +235,13 @@ A partir de esa actualización del ejecutable, los cambios de contenido y esa im
 - **Paso de migración una sola vez:** como el servicio instalado utiliza una copia independiente en `/usr/local/libexec/esforzados-update`, es necesario actualizar dicha copia tras esta fusión para habilitar el nuevo patrón PNG. Ver `deploy/ec2/README.md`.
 
 La imagen y la diapositiva se encuentran en el **portal principal**. No se cambian la portada ni las funcionalidades del repositorio `jimmybackend/s3`.
+
+## 13. Tercera diapositiva — Esforzados Hub
+
+- **Imagen:** `assets/carousel-hub.png` (1916 × 821), diseño aprobado con flujo de ventas y automatización.
+- **Orden:** Legal, Drive, **Hub**, Edu, Chat; Legal mantiene su estilo caoba independiente y Hub conserva colores tecnológicos.
+- **Contenido:** campaña, URL corta, landing, lead/CRM, notificaciones, workflow y siguiente paso sugerido por IA. Incluye mención de Mail, ERP, analítica y Chat IA.
+- **Acción:** enlace a `https://hub.esforzados.com/` en el pie del banner. Las cifras del diseño son ilustrativas y no corresponden a resultados reales.
+- **Origen y revisión:** imagen aprobada por el usuario; copia privada de diseño en Google Drive. Integrada por GitHub Blob SHA `65b98f63b809bcc03b1360e3652b6bf196623898`.
+- **EC2:** el actualizador instalado que admite `assets/carousel-*.png` publicará este archivo automáticamente tras fusionar en `main`. Verificar que el servicio use la versión nueva; de lo contrario actualizar el ejecutable una sola vez.
+
