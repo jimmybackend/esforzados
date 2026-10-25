@@ -88,7 +88,7 @@ Hasta configurar DNS y un certificado válido **no prometer acceso HTTPS**. El s
 1. Editar la portada en GitHub (interfaz web) o utilizar una rama y PR.
 2. Fusionar cambios revisados a `main`.
 3. El servicio `esforzados-update.timer` busca cambios **aproximadamente cada cinco minutos**.
-4. Si el código se descarga correctamente, valida que existan los cuatro archivos de lista blanca, crea una nueva versión y conmuta `current` sin interrumpir las lecturas.
+4. Si el código se descarga correctamente, valida que existan los archivos aprobados de lista blanca, crea una nueva versión y conmuta `current` sin interrumpir las lecturas.
 5. Si GitHub no responde o un archivo falta, **la versión anterior se mantiene intacta**.
 
 No hace falta un botón PHP de actualización pública. Para forzar una revisión **desde el servidor**, bajo autenticación del administrador: `sudo systemctl start esforzados-update.service`.
@@ -125,6 +125,7 @@ sudo ls -ld /var/www/esforzados/releases/sha-*
 - `assets/site.css`
 - `assets/site.js`
 - `assets/brand.svg`
+- `assets/carousel-legal.png`
 
 Si el proyecto incorpora más archivos necesarios, habrá que ampliar expresamente esa lista en el script, revisarla y actualizar el instalador **de forma controlada**. No se sincroniza todo el repositorio al directorio público.
 
@@ -168,3 +169,5 @@ sudo systemctl start esforzados-update.service
 Si `/tmp/esforzados-install` ya no está disponible, descargar una copia nueva a un directorio temporal vacío antes del comando `sudo install`. **No ejecutar `install.sh` otra vez sólo para corregir permisos**, ni ejecutar `chmod -R` sobre `/var/www`.
 
 La prueba HTTP con cabecera Host verifica únicamente el bloque virtual de Esforzados; cualquier cambio de DNS o nombre de host se maneja por separado. El sitio sigue siendo un **preview público sin datos de expedientes**.
+
+> **Imagen Legal (2026-10-25):** tras fusionar, actualizar una vez el ejecutable instalado en EC2 con la versión de `deploy/ec2/update.sh` que añade el PNG a la lista blanca. Véase README principal, sección «Carrusel Legal». Sin ese paso el timer actualizará el HTML pero no copiará el PNG.
