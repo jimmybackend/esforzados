@@ -67,8 +67,12 @@ def check() -> None:
     assert "/var/lib/esforzados/repo" in updater
     assert "/var/www/esforzados" in updater
     assert "/var/www/esforzados/repo" not in updater
+    # mktemp -d nace 0700; Nginx no puede atravesar esas carpetas
+    # si el actualizador olvida convertirlas explícitamente a 0755.
+    assert 'chmod 0755 "$stage" "$stage/assets"' in updater
+    assert 'chmod 0755 "$release" "$release/assets"' in updater
 
-    print("OK: estructura estática, carrusel, enlaces, SVG y archivos de despliegue.")
+    print("OK: estructura estática, carrusel, enlaces, permisos de releases, SVG y despliegue.")
 
 
 if __name__ == "__main__":
