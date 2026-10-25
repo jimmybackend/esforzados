@@ -1,0 +1,26 @@
+[Unit]
+Description=Esforzados - publicar version validada desde GitHub main
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=esforzados-deploy
+Group=esforzados-deploy
+ExecStart=/usr/local/libexec/esforzados-update
+WorkingDirectory=/var/lib/esforzados
+TimeoutStartSec=180
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/esforzados /var/www/esforzados
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+LockPersonality=true
+RestrictSUIDSGID=true
+CapabilityBoundingSet=
+UMask=0022
+
+[Install]
+WantedBy=multi-user.target

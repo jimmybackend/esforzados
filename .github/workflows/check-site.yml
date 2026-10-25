@@ -1,0 +1,25 @@
+name: Verify static Esforzados portal
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  static-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validar enlaces y estructura del sitio
+        run: python3 tests/check_site.py
+      - name: Validar sintaxis del actualizador e instalador
+        run: |
+          bash -n deploy/ec2/install.sh
+          bash -n deploy/ec2/update.sh
+      - name: Validar sintaxis JavaScript
+        run: node --check assets/site.js

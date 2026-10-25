@@ -1,0 +1,12 @@
+[Unit]
+Description=Esforzados - comprobar actualizaciones de GitHub main cada cinco minutos
+
+[Timer]
+OnBootSec=45s
+OnUnitInactiveSec=5min
+RandomizedDelaySec=20s
+Unit=esforzados-update.service
+Persistent=true
+
+[Install]
+WantedBy=timers.target
