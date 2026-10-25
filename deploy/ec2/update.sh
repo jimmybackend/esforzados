@@ -30,9 +30,18 @@ fi
 sha="$(git -C "$REPO_DIR" rev-parse HEAD)"
 [[ "$sha" =~ ^[0-9a-f]{40}$ ]] || fail "No fue posible verificar el commit."
 target="releases/sha-$sha"
+release="$WEB_ROOT/$target"
+
+# mktemp -d crea las carpetas con permiso 0700. Nginx necesita el bit
+# de lectura/ejecución (0755) en el release, además de archivos 0644.
+# Reparar también versiones ya creadas con el instalador anterior.
+if [[ -d "$release" && ! -L "$release" ]]; then
+  [[ -d "$release/assets" && ! -L "$release/assets" ]] || fail "Assets inválidos en el release."
+  chmod 0755 "$release" "$release/assets"
+fi
 
 if [[ -L "$WEB_ROOT/current" ]] && [[ "$(readlink "$WEB_ROOT/current")" == "$target" ]]; then
-  log "Sin cambios: el sitio ya usa $sha."
+  log "Sin cambios: el sitio ya usa $sha (permisos verificados)."
   exit 0
 fi
 
@@ -44,7 +53,6 @@ for file in "${files[@]}"; do
 done
 [[ -d "$REPO_DIR/assets" && ! -L "$REPO_DIR/assets" ]] || fail "Directorio assets inválido."
 
-release="$WEB_ROOT/$target"
 if [[ ! -d "$release" ]]; then
   stage="$(mktemp -d "$RELEASES/.stage.XXXXXXXX")"
   trap 'rm -rf -- "${stage:-}"' EXIT
@@ -52,6 +60,8 @@ if [[ ! -d "$release" ]]; then
   for file in "${files[@]}"; do
     install -m 0644 "$REPO_DIR/$file" "$stage/$file"
   done
+  # Sin este chmod, el directorio temporal conserva 0700 y Nginx da 403/404.
+  chmod 0755 "$stage" "$stage/assets"
   mv -- "$stage" "$release"
   trap - EXIT
 fi
