@@ -329,3 +329,19 @@ h1 em,h2 em {font-family:Georgia,Cambria,"Times New Roman",serif;letter-spacing:
   .legal-artwork-caption-text { font-size: 12px; }
   .legal-artwork-action { width: 100%; }
 }
+
+/* ArcadeCloud Drive: fotografía original de servicios AWS / S3, completa y sin recortes. */
+.slide-drive-artwork { background: #060c19; }
+.drive-artwork > img {
+  aspect-ratio: 1916 / 821;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  background: #060c19;
+}
+.drive-artwork-caption {
+  background: #071929;
+  border-top-color: rgba(75, 205, 237, .34);
+}
+.drive-artwork-caption .legal-artwork-caption-text { color: #e0eef8; }
+.drive-artwork-action { color: #101d2c; }
