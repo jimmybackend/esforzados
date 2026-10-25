@@ -75,8 +75,13 @@ def check() -> None:
     # si el actualizador olvida convertirlas explícitamente a 0755.
     assert 'chmod 0755 "$stage" "$stage/assets"' in updater
     assert 'chmod 0755 "$release" "$release/assets"' in updater
+    # Evitar que el publicador ignore un PNG faltante porque ya se publicó el SHA.
+    assert 'cmp -s "$REPO_DIR/$file" "$release/$file"' in updater
+    assert 'Reparado archivo del release' in updater
+    assert updater.index('readonly files=') < updater.index('if [[ -L "$WEB_ROOT/current" ]]')
+    assert updater.index('Reparar versiones ya publicadas') < updater.index('if [[ -L "$WEB_ROOT/current" ]]')
 
-    print("OK: estructura estática, carrusel, enlaces, permisos de releases, SVG y despliegue.")
+    print("OK: sitio, carrusel, permisos y reparación automática de imágenes faltantes.")
 
 
 if __name__ == "__main__":
