@@ -286,7 +286,7 @@ h1 em,h2 em {font-family:Georgia,Cambria,"Times New Roman",serif;letter-spacing:
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 1672 / 941;
+  aspect-ratio: 1916 / 821;
   object-fit: contain;
   background: #160f0c;
 }
@@ -326,20 +326,20 @@ h1 em,h2 em {font-family:Georgia,Cambria,"Times New Roman",serif;letter-spacing:
 }
 
 /* ArcadeCloud Drive: fotografía original de servicios AWS / S3, completa y sin recortes. */
-.slide-drive-artwork { background: #060c19; }
+.slide-drive-artwork { background: #160f0c; }
 .drive-artwork > .artwork-image-link > img {
   aspect-ratio: 1916 / 821;
   width: 100%;
   height: auto;
   object-fit: contain;
-  background: #060c19;
+  background: #160f0c;
 }
 .drive-artwork-caption {
-  background: #071929;
-  border-top-color: rgba(75, 205, 237, .34);
+  background: #18110e;
+  border-top-color: rgba(217,173,124,.34);
 }
-.drive-artwork-caption .legal-artwork-caption-text { color: #e0eef8; }
-.drive-artwork-action { color: #101d2c; }
+.drive-artwork-caption .legal-artwork-caption-text { color: #efe3d8; }
+.drive-artwork-action { color: #231712; }
 
 .slide-hub-artwork { background: #091324; }
 .hub-artwork > .artwork-image-link > img { width: 100%; height: auto; aspect-ratio: 1916 / 821; object-fit: contain; background: #091324; }
@@ -359,3 +359,12 @@ h1 em,h2 em {font-family:Georgia,Cambria,"Times New Roman",serif;letter-spacing:
 .chat-artwork-caption .legal-artwork-caption-text,
 .edu-artwork-caption .legal-artwork-caption-text { color: #efe3d8; }
 .chat-artwork-action,.edu-artwork-action { color: #231712; }
+
+/* Contacto institucional del servidor privado; copyright centrado. */
+.footer-contact { padding: 28px 0 10px; text-align: center; color: #e9dfd1; }
+.footer-contact > strong { display: block; font-size: 14px; letter-spacing: .04em; color: #f5e6cf; }
+.footer-contact-links { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 8px 24px; margin: 10px auto; font-size: 13px; }
+.footer-contact-links a { color: #e7c990; text-decoration: underline; text-underline-offset: 3px; }
+.footer-contact-links a:hover { color: #fff; }
+.footer-contact p { margin: 12px 0 0; font-size: 12px; color: #bba995; }
+.footer-bottom { justify-content: center; text-align: center; }

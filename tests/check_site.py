@@ -70,6 +70,11 @@ def check() -> None:
     assert '<nav ' not in html and 'menu-toggle' not in html
     assert 'class="footer-top"' not in html and 'class="brand-footer"' not in html
     assert html.count("Todos los derechos reservados.") == 1
+    assert html.count("Contacto y soporte") == 1
+    assert 'href="tel:+525586458862">Esforzados Legal · +52 55 8645 8862</a>' in html
+    assert 'href="mailto:soporte@esforzados.com">soporte@esforzados.com</a>' in html
+    assert "Servidor privado de Esforzados." in html
+    assert 'class="container footer-contact"' in html
     assert '<div class="container footer-bottom"><small>© <span id="year">2026</span> Esforzados. Todos los derechos reservados.</small></div>' in html
     assert "Tecnología con propósito" not in html
     assert 'href="#legal"' not in html and 'href="#servicios"' not in html
@@ -95,15 +100,22 @@ def check() -> None:
     css = (ROOT / "assets/site.css").read_text(encoding="utf-8")
     assert ".footer-bottom {display:flex;align-items:center;justify-content:center;text-align:center;" in css
     assert ".artwork-image-link {display:block;width:100%;cursor:pointer;}" in css
+    assert ".footer-contact { padding: 28px 0 10px; text-align: center;" in css
+    assert "aspect-ratio: 1672 / 941" not in css
+    assert "aspect-ratio: 1916 / 821" in css
 
     assert 'src="assets/carousel-legal.png"' in html, "Banner aprobado de Legal no enlazado"
-    assert 'src="assets/carousel-drive-aws.png"' in html, "Imagen original de Drive no enlazada"
-    assert (ROOT / "assets/carousel-legal.png").read_bytes().startswith(bytes.fromhex("89504e470d0a1a0a")), "PNG de Legal inválido"
+    assert 'src="assets/carousel-drive-aws.png"' in html, "Imagen aprobada de Drive no enlazada"
+    legal = (ROOT / "assets/carousel-legal.png").read_bytes()
+    assert legal.startswith(bytes.fromhex("89504e470d0a1a0a")), "PNG de Legal inválido"
+    assert struct.unpack(">II", legal[16:24]) == (1916, 821), "Dimensiones de Legal deben coincidir con Drive"
+    legal_git_sha = hashlib.sha1(b"blob " + str(len(legal)).encode() + bytes([0]) + legal).hexdigest()
+    assert legal_git_sha == "466c8edc395df8d3095e0a06d3dc0646da0c270c", "Imagen de Legal no coincide con la aprobada"
     drive = (ROOT / "assets/carousel-drive-aws.png").read_bytes()
     assert drive.startswith(bytes.fromhex("89504e470d0a1a0a")), "PNG original de Drive inválido"
     assert struct.unpack(">II", drive[16:24]) == (1916, 821), "Dimensiones de original AWS S3 inesperadas"
     git_blob = hashlib.sha1(b"blob " + str(len(drive)).encode() + bytes([0]) + drive).hexdigest()
-    assert git_blob == "dd7395d4e030ead572a56c4f498a8ecd94ca02b0", "La imagen AWS S3 no coincide con el original de ArcadeCloud"
+    assert git_blob == "c2c089eecbdad852d5fe5b39bfc7f740e12aa27e", "La imagen Drive no coincide con la versión en cedro aprobada"
     js = (ROOT / "assets/site.js").read_text(encoding="utf-8")
     assert '["Esforzados Legal", "ArcadeCloud Drive", "Esforzados Hub", "Esforzados Chat"' in js, "Anuncios JS del carrusel desordenados"
     assert 'serviceNavigation' not in js and 'menu-principal' not in js, "Quedó JavaScript de los menús retirados"

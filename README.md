@@ -254,3 +254,13 @@ La imagen y la diapositiva se encuentran en el **portal principal**. No se cambi
 - **Edu:** `assets/carousel-edu.png` (1916 × 821), Git blob `bee20aa889e64e5a904bee4a54b72f9463026fd2`. Plataforma académica para escuelas y diplomados en línea, con alumnos, calendarios académicos, programas de estudio, tareas, exámenes, boletas y pagos. CTA hacia `https://edu.esforzados.com/`.
 - **Origen:** diseños generados y aprobados, subidos a Google Drive `Developer/Esforzados/Disenos Carrusel/` e importados a blobs GitHub conservando sus bytes exactos.
 - **Actualización EC2:** el script existente acepta `assets/carousel-*.png`, por lo que los nuevos banners se publican mediante `esforzados-update.service` sin cambiar Nginx ni otros servicios. La ilustración de Chat no implica acceso público a archivos ni conversaciones.
+
+
+## 15. Identidad visual institucional y contacto (25 de octubre de 2026)
+
+- Dos banners revisados y autorizados, ambos de **1916 × 821 píxeles**. Se mantienen las cinco diapositivas y el orden **Legal → Drive → Hub → Chat → Edu**.
+- **Legal:** `assets/carousel-legal.png`, imagen de oficina jurídica caoba que incluye en la pantalla de la computadora la imagen de la tecnología AWS/S3 de ArcadeCloud Drive. SHA Git `466c8edc395df8d3095e0a06d3dc0646da0c270c`.
+- **Drive:** `assets/carousel-drive-aws.png`, composición S3/AWS con nueva paleta institucional negro, dorado, café y cedro. SHA Git `c2c089eecbdad852d5fe5b39bfc7f740e12aa27e`.
+- Ambas versiones se guardaron en Google Drive, carpeta `Developer/Esforzados/Disenos Carrusel/`, con los nombres `carousel-legal-aprobado-20261025.png` y `carousel-drive-cedro-aprobado-20261025.png`. Se importaron a GitHub conservando los mismos bytes y SHA.
+- **Pie:** “Contacto y soporte”, número `+52 55 8645 8862` (enlace `tel:`), `soporte@esforzados.com` (enlace `mailto:`), “Servidor privado de Esforzados.” y copyright centrado.
+- El CSS mantiene una proporción panorámica uniforme para Legal y Drive, sin agrandar Legal al rotar el carrusel. El actualizador existente publica automáticamente `assets/carousel-*.png` sin modificar Nginx.
