@@ -220,3 +220,18 @@ ls -lh /var/www/esforzados/current/assets/carousel-legal.png
 ```
 
 A partir de esa actualización del ejecutable, los cambios de contenido y esa imagen se publican periódicamente al fusionar en `main`; no hay que modificar otras configuraciones de Nginx o de ArcadeCloud. Para nuevos tipos de archivos será necesario revisar y ampliar la lista blanca de forma controlada.
+
+## 12. Carrusel con imagen original de ArcadeCloud Drive
+
+**Orden aprobado del carrusel principal:** Legal → **Drive** → Edu → Hub → Chat.
+
+- **Segunda diapositiva:** imagen original de ArcadeCloud, mostrando Amazon S3 y servicios AWS; no se recreó ni modificó.
+- **Fuente verificada:** repositorio `jimmybackend/s3`, archivo `drive/images/home/carousel-01-s3-aws.png`, commit de referencia main al importar.
+- **Identidad del archivo:** Git blob SHA `dd7395d4e030ead572a56c4f498a8ecd94ca02b0`, imagen PNG `1916 × 821`.
+- **Destino en este repositorio:** `assets/carousel-drive-aws.png`.
+- **Presentación:** imagen completa (sin recortes) más enlace a `https://drive.esforzados.com/`. El pie mantiene la descripción accesible en pantallas pequeñas.
+- **Prueba automática:** valida que el archivo incorporado conserve los bytes originales y que el orden coincida con los controles del carrusel.
+- **Actualización en EC2:** `deploy/ec2/update.sh` ahora copia solamente archivos base y `assets/carousel-*.png`, para que futuras imágenes de carrusel con ese prefijo se publiquen al fusionar `main`. No publica secretos, archivos arbitrarios ni el checkout Git.
+- **Paso de migración una sola vez:** como el servicio instalado utiliza una copia independiente en `/usr/local/libexec/esforzados-update`, es necesario actualizar dicha copia tras esta fusión para habilitar el nuevo patrón PNG. Ver `deploy/ec2/README.md`.
+
+La imagen y la diapositiva se encuentran en el **portal principal**. No se cambian la portada ni las funcionalidades del repositorio `jimmybackend/s3`.
