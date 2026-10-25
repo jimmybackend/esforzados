@@ -87,7 +87,7 @@ def check() -> None:
         section = section[:section.index("</article>")]
         assert re.search(
             r'<a class="artwork-image-link" href="' + re.escape(destination) +
-            r'"[^>]*>\\s*<img src="assets/' + re.escape(image) + r'"[^>]*>\\s*</a>',
+            r'"[^>]*>\s*<img src="assets/' + re.escape(image) + r'"[^>]*>\s*</a>',
             section,
         ), f"Imagen del carrusel {service} no enlaza a {destination}"
         assert re.search(r'<a class="button [^"]*" href="' + re.escape(destination) + r'"', section), f"Botón {service} no enlaza al destino esperado"
