@@ -264,3 +264,11 @@ La imagen y la diapositiva se encuentran en el **portal principal**. No se cambi
 - Ambas versiones se guardaron en Google Drive, carpeta `Developer/Esforzados/Disenos Carrusel/`, con los nombres `carousel-legal-aprobado-20261025.png` y `carousel-drive-cedro-aprobado-20261025.png`. Se importaron a GitHub conservando los mismos bytes y SHA.
 - **Pie:** “Contacto y soporte”, número `+52 55 8645 8862` (enlace `tel:`), `soporte@esforzados.com` (enlace `mailto:`), “Servidor privado de Esforzados.” y copyright centrado.
 - El CSS mantiene una proporción panorámica uniforme para Legal y Drive, sin agrandar Legal al rotar el carrusel. El actualizador existente publica automáticamente `assets/carousel-*.png` sin modificar Nginx.
+
+## 16. Carrusel responsivo y footer sin saltos (25 de octubre de 2026)
+
+- `assets/site.css` apila las cinco diapositivas sobre una única celda CSS Grid. Las diapositivas ocultas conservan el atributo `hidden` y `visibility:hidden` para no ser interactivas, pero siguen aportando su altura al cálculo de la cuadrícula. Así la altura del carrusel es constante al avanzar manualmente o por autoplay, aunque varíe la longitud de los pies de imagen.
+- Cada imagen original se muestra completa con proporción `1916 / 821` y enlaces intactos a sus respectivos portales. No se reemplazaron PNG ni textos de contacto.
+- La página usa un cuerpo flexible con altura mínima de viewport estable (`100svh`), ubicando el footer después del carrusel sin que cambie de posición durante la rotación.
+- Ajustes para tabletas y móviles (760 y 380 píxeles): pies de imagen legibles, controles compactos y correo/teléfono capaces de acomodarse sin desbordar.
+- Prueba en `tests/check_site.py`: asegura que los controles y las imágenes se conservan, que todas las imágenes declaran la misma proporción y que existen las reglas antisalto y responsivas.
