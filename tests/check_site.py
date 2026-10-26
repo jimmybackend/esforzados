@@ -77,7 +77,7 @@ def check() -> None:
     assert '<p class="footer-line footer-line-contact"><strong>Contacto y soporte:</strong> ' in html
     assert 'href="tel:+525586458862">+52 55 8645 8862</a>' in html
     assert 'href="mailto:soporte@esforzados.com">soporte@esforzados.com</a></p>' in html
-    assert '<p class="footer-line footer-line-legal">Servidor privado de Esforzados. © <span id="year">2026</span> Esforzados. Todos los derechos reservados.</p>' in html
+    assert '<p class="footer-line footer-line-legal"><span class="footer-server-label">Servidor privado de Esforzados.</span> <small class="footer-copyright">© <span id="year">2026</span> Esforzados. Todos los derechos reservados.</small></p>' in html
     assert 'Esforzados Legal ·' not in html[html.index('<footer'):], "No añadir otro rótulo al teléfono"
     assert 'class="footer-contact-links"' not in html
     assert "Tecnología con propósito" not in html
@@ -102,9 +102,13 @@ def check() -> None:
         assert re.search(r'<a class="button [^"]*" href="' + re.escape(destination) + r'"', section), f"Botón {service} no enlaza al destino esperado"
 
     css = (ROOT / "assets/site.css").read_text(encoding="utf-8")
-    assert ".footer-compact {text-align:center;padding:14px 0 16px;}" in css
-    assert ".footer-line {margin:0;letter-spacing:normal;line-height:1.5;white-space:nowrap;}" in css
-    assert ".footer-line {white-space:normal;line-height:1.45;}" in css, "En móvil evitar desbordamiento horizontal"
+    assert ".footer-compact {text-align:center;padding:10px 0;}" in css
+    assert ".footer-line {margin:0;padding:0;letter-spacing:normal;line-height:1.1;white-space:nowrap;}" in css
+    assert ".footer-line {white-space:normal;line-height:1.1;}" in css, "En móvil evitar desbordamiento horizontal"
+    assert ".footer-line-contact strong {font-size:14px;letter-spacing:.04em;font-weight:700;color:#f5e6cf;}" in css
+    assert ".footer-line-contact a {font-size:13px;color:#e7c990;text-decoration:underline;text-underline-offset:3px;}" in css
+    assert ".footer-server-label {font-size:12px;color:#bba995;}" in css
+    assert ".footer-copyright {font-size:11px;color:#bba995;}" in css
     assert ".artwork-image-link {display:block;width:100%;cursor:pointer;}" in css
     assert "aspect-ratio: 1672 / 941" not in css
     assert "aspect-ratio: 1916 / 821" in css
