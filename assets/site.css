@@ -38,7 +38,7 @@ h1 em,h2 em {font-family:Georgia,Cambria,"Times New Roman",serif;letter-spacing:
 .brand-symbol {width:47px;height:47px;display:grid;place-items:center;position:relative;border:1px solid rgba(255,255,255,.44);border-radius:14px;color:#fff;font-size:29px;line-height:1;font-family:Georgia,serif;font-style:italic;}
 .brand-symbol>span {position:absolute;right:4px;top:4px;font-family:system-ui,sans-serif;font-size:10px;color:var(--gold);font-style:normal;}
 .brand-wordmark {display:grid;gap:6px;}
-.brand-wordmark strong {font-size:22px;letter-spacing:-.07em;font-weight:780;}
+.brand-wordmark strong {font-size:22px;letter-spacing:.015em;font-weight:780;}
 .brand-wordmark small {font-size:9px;line-height:1;text-transform:uppercase;letter-spacing:.13em;color:#b7c4ce;font-weight:700;white-space:nowrap;}
 .navigation {display:flex;align-items:center;gap:clamp(18px,2.4vw,35px);font-size:13px;font-weight:600;}
 .navigation>a:not(.nav-action) {color:#d5dfe6;transition:color .2s;}
