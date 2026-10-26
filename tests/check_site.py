@@ -105,10 +105,18 @@ def check() -> None:
     assert ".footer-compact {text-align:center;padding:10px 0;}" in css
     assert ".footer-line {margin:0;padding:0;letter-spacing:normal;line-height:1.1;white-space:nowrap;}" in css
     assert ".footer-line {white-space:normal;line-height:1.1;}" in css, "En móvil evitar desbordamiento horizontal"
-    assert ".footer-line-contact strong {font-size:14px;letter-spacing:.04em;font-weight:700;color:#f5e6cf;}" in css
+    assert ".footer-line-contact strong {font-size:14px;letter-spacing:.04em;font-weight:700;color:#e7c990;}" in css
     assert ".footer-line-contact a {font-size:13px;color:#e7c990;text-decoration:underline;text-underline-offset:3px;}" in css
-    assert ".footer-server-label {font-size:12px;color:#bba995;}" in css
-    assert ".footer-copyright {font-size:11px;color:#bba995;}" in css
+    assert ".footer-server-label {font-size:12px;color:#e7c990;}" in css
+    assert ".footer-copyright {font-size:11px;color:#e7c990;}" in css
+    # Todos los textos del footer, incluidos enlaces y copyright, deben permanecer dorados.
+    footer_rules = css[css.index(".footer-compact {"):css.index("@media (max-width: 670px)", css.index(".footer-compact {"))]
+    for selector in (".footer-line-contact", ".footer-line-contact strong", ".footer-line-contact a",
+                     ".footer-line-legal", ".footer-server-label", ".footer-copyright"):
+        assert selector in footer_rules, f"Falta estilo del footer para {selector}"
+    assert footer_rules.count("color:#e7c990;") == 6, "Todo el texto del footer debe ser dorado"
+    assert ".footer-line-contact a:hover {color:#ffdda0;}" in footer_rules
+
     assert ".artwork-image-link {display:block;width:100%;cursor:pointer;}" in css
     assert "aspect-ratio: 1672 / 941" not in css
     assert "aspect-ratio: 1916 / 821" in css
