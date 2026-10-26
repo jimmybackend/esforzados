@@ -185,8 +185,20 @@ h1 em,h2 em {font-family:Georgia,Cambria,"Times New Roman",serif;letter-spacing:
 .contact p {font-size:14px;line-height:1.8;color:#c6dbdc;margin:0;max-width:600px;}
 .contact .button {flex-shrink:0;}
 .footer {background:#101d2c;color:#fff;}
-.footer-bottom {display:flex;align-items:center;justify-content:center;text-align:center;padding:21px 0 27px;color:#98aab4;}
-.footer-bottom small {font-size:11px;}
+.footer-compact {text-align:center;padding:14px 0 16px;}
+.footer-line {margin:0;letter-spacing:normal;line-height:1.5;white-space:nowrap;}
+.footer-line-contact {font-size:13px;color:#e9dfd1;}
+.footer-line-contact strong {font-weight:700;color:#f5e6cf;}
+.footer-line-contact a {color:#e7c990;text-decoration:underline;text-underline-offset:2px;}
+.footer-line-contact a:hover {color:#fff;}
+.footer-line-legal {font-size:11px;color:#bba995;}
+@media (max-width: 670px) {
+  .footer-compact {padding:12px 0 14px;}
+  .footer-line {white-space:normal;line-height:1.45;}
+  .footer-line-contact {font-size:12px;}
+  .footer-line-contact a {white-space:nowrap;}
+  .footer-line-legal {font-size:11px;}
+}
 @media (max-width: 1020px) {
   .navigation {gap:15px;font-size:12px;}
   .header-inner {gap:20px;}
@@ -360,14 +372,6 @@ h1 em,h2 em {font-family:Georgia,Cambria,"Times New Roman",serif;letter-spacing:
 .edu-artwork-caption .legal-artwork-caption-text { color: #efe3d8; }
 .chat-artwork-action,.edu-artwork-action { color: #231712; }
 
-/* Contacto institucional del servidor privado; copyright centrado. */
-.footer-contact { padding: 28px 0 10px; text-align: center; color: #e9dfd1; }
-.footer-contact > strong { display: block; font-size: 14px; letter-spacing: .04em; color: #f5e6cf; }
-.footer-contact-links { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 8px 24px; margin: 10px auto; font-size: 13px; }
-.footer-contact-links a { color: #e7c990; text-decoration: underline; text-underline-offset: 3px; }
-.footer-contact-links a:hover { color: #fff; }
-.footer-contact p { margin: 12px 0 0; font-size: 12px; color: #bba995; }
-.footer-bottom { justify-content: center; text-align: center; }
 
 /* Portada adaptable sin saltos: todas las diapositivas reservan el mismo
    espacio en la cuadrícula. Las inactivas conservan su geometría, pero
@@ -417,8 +421,7 @@ main {
   flex: 1 0 auto;
   min-width: 0;
 }
-.carousel-stage .legal-artwork-caption-text,
-.footer-contact-links a {
+.carousel-stage .legal-artwork-caption-text {
   overflow-wrap: anywhere;
 }
 .carousel-stage .legal-artwork-action { text-align: center; }
@@ -433,7 +436,6 @@ main {
     font-size: clamp(11px, 2.9vw, 12px);
     line-height: 1.5;
   }
-  .footer-contact-links { padding-inline: 5px; }
 }
 @media (max-width: 380px) {
   .carousel-footer { padding-inline: 10px; gap: 6px; }
@@ -443,5 +445,4 @@ main {
   .carousel-dot.is-active > span { width: 14px; }
   .carousel-arrows { gap: 3px; }
   .arrow-button { width: 36px; height: 40px; }
-  .footer-contact-links { flex-direction: column; gap: 8px; }
 }

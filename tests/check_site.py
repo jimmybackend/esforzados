@@ -71,11 +71,15 @@ def check() -> None:
     assert 'class="footer-top"' not in html and 'class="brand-footer"' not in html
     assert html.count("Todos los derechos reservados.") == 1
     assert html.count("Contacto y soporte") == 1
-    assert 'href="tel:+525586458862">Esforzados Legal · +52 55 8645 8862</a>' in html
-    assert 'href="mailto:soporte@esforzados.com">soporte@esforzados.com</a>' in html
-    assert "Servidor privado de Esforzados." in html
-    assert 'class="container footer-contact"' in html
-    assert '<div class="container footer-bottom"><small>© <span id="year">2026</span> Esforzados. Todos los derechos reservados.</small></div>' in html
+    # Dos bloques de texto consecutivos; sin párrafos intermedios ni espacios visuales grandes.
+    assert '<div class="container footer-compact">' in html
+    assert html.count('class="footer-line ') == 2, "El pie debe tener dos únicas líneas"
+    assert '<p class="footer-line footer-line-contact"><strong>Contacto y soporte:</strong> ' in html
+    assert 'href="tel:+525586458862">+52 55 8645 8862</a>' in html
+    assert 'href="mailto:soporte@esforzados.com">soporte@esforzados.com</a></p>' in html
+    assert '<p class="footer-line footer-line-legal">Servidor privado de Esforzados. © <span id="year">2026</span> Esforzados. Todos los derechos reservados.</p>' in html
+    assert 'Esforzados Legal ·' not in html[html.index('<footer'):], "No añadir otro rótulo al teléfono"
+    assert 'class="footer-contact-links"' not in html
     assert "Tecnología con propósito" not in html
     assert 'href="#legal"' not in html and 'href="#servicios"' not in html
 
@@ -98,9 +102,10 @@ def check() -> None:
         assert re.search(r'<a class="button [^"]*" href="' + re.escape(destination) + r'"', section), f"Botón {service} no enlaza al destino esperado"
 
     css = (ROOT / "assets/site.css").read_text(encoding="utf-8")
-    assert ".footer-bottom {display:flex;align-items:center;justify-content:center;text-align:center;" in css
+    assert ".footer-compact {text-align:center;padding:14px 0 16px;}" in css
+    assert ".footer-line {margin:0;letter-spacing:normal;line-height:1.5;white-space:nowrap;}" in css
+    assert ".footer-line {white-space:normal;line-height:1.45;}" in css, "En móvil evitar desbordamiento horizontal"
     assert ".artwork-image-link {display:block;width:100%;cursor:pointer;}" in css
-    assert ".footer-contact { padding: 28px 0 10px; text-align: center;" in css
     assert "aspect-ratio: 1672 / 941" not in css
     assert "aspect-ratio: 1916 / 821" in css
 
@@ -115,7 +120,7 @@ def check() -> None:
     assert "grid-area: 1 / 1;" in css
     assert "min-height: 100svh;" in css and ".footer { flex-shrink: 0; }" in css
     assert "@media (max-width: 760px)" in css and "@media (max-width: 380px)" in css
-    assert "flex-direction: column; gap: 8px;" in css, "Contacto debe ajustarse en móviles estrechos"
+    assert ".footer-line-contact a {white-space:nowrap;}" in css, "Correo y teléfono sin cortar en móviles"
     assert html.count('width="1916" height="821"') == 5, "Todas las imágenes deben declarar las mismas medidas"
 
     assert 'src="assets/carousel-legal.png"' in html, "Banner aprobado de Legal no enlazado"
