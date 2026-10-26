@@ -109,6 +109,14 @@ def check() -> None:
     assert ".footer-line-contact a {font-size:13px;color:#e7c990;text-decoration:underline;text-underline-offset:3px;}" in css
     assert ".footer-server-label {font-size:12px;color:#e7c990;}" in css
     assert ".footer-copyright {font-size:11px;color:#e7c990;}" in css
+    # Todas las letras HTML de cabecera, carrusel (incluidas leyendas,
+    # controles y CTA) y footer conservan un solo tono dorado.
+    assert "--site-text-gold: #e7c990;" in css
+    assert ".site-header, .hero, .footer,\\n.site-header *, .hero *, .footer * {" .replace("\\\\n", "\\n") in css
+    assert "color: var(--site-text-gold) !important;" in css
+    assert ".hero .button-light {" in css and "background: #18110e;" in css
+    assert "href=\"assets/site.css?v=oro-20261026\"" in html, "Actualizar versión CSS para evitar caché"
+
     # Todos los textos del footer, incluidos enlaces y copyright, deben permanecer dorados.
     footer_rules = css[css.index(".footer-compact {"):css.index("@media (max-width: 670px)", css.index(".footer-compact {"))]
     for selector in (".footer-line-contact", ".footer-line-contact strong", ".footer-line-contact a",
