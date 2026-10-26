@@ -112,7 +112,8 @@ def check() -> None:
     # Todas las letras HTML de cabecera, carrusel (incluidas leyendas,
     # controles y CTA) y footer conservan un solo tono dorado.
     assert "--site-text-gold: #e7c990;" in css
-    assert ".site-header, .hero, .footer,\\n.site-header *, .hero *, .footer * {" .replace("\\\\n", "\\n") in css
+    assert ".site-header, .hero, .footer," in css
+    assert ".site-header *, .hero *, .footer * {" in css
     assert "color: var(--site-text-gold) !important;" in css
     assert ".hero .button-light {" in css and "background: #18110e;" in css
     assert "href=\"assets/site.css?v=oro-20261026\"" in html, "Actualizar versión CSS para evitar caché"
