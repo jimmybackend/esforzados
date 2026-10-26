@@ -468,3 +468,15 @@ main {
 }
 .hero .button-light:hover { background: #2b1c13; }
 .skip-link { color: var(--site-text-gold); background: var(--ink-deep); }
+
+/* Refuerzo explícito para textos que antes heredaban blanco/gris: todas las
+   letras de la portada (marca, lema, botones, etiquetas, pies y copyright)
+   son oro, sin alterar imágenes, tamaños, alineación o espaciado. */
+.site-header .brand, .site-header .brand *,
+.carousel .carousel-dot, .carousel .carousel-dot *,
+.carousel .legal-artwork-caption-text,
+.carousel .button, .carousel .button *,
+.footer .footer-compact, .footer .footer-compact * {
+  color: #e7c990 !important;
+  -webkit-text-fill-color: #e7c990 !important;
+}
