@@ -368,3 +368,80 @@ h1 em,h2 em {font-family:Georgia,Cambria,"Times New Roman",serif;letter-spacing:
 .footer-contact-links a:hover { color: #fff; }
 .footer-contact p { margin: 12px 0 0; font-size: 12px; color: #bba995; }
 .footer-bottom { justify-content: center; text-align: center; }
+
+/* Portada adaptable sin saltos: todas las diapositivas reservan el mismo
+   espacio en la cuadrícula. Las inactivas conservan su geometría, pero
+   permanecen invisibles, sin eventos de puntero ni foco. */
+body {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+main {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.hero { flex: 1 0 auto; }
+.footer { flex-shrink: 0; }
+.carousel-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 0;
+}
+.carousel-stage > .slide {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  width: 100%;
+}
+/* Los slides ocultos forman parte del cálculo de altura máxima. Su atributo
+   hidden sigue presente y visibility:hidden impide navegación y lectura. */
+.carousel-stage > .slide[hidden] {
+  display: flex !important;
+  visibility: hidden;
+  pointer-events: none;
+}
+.carousel-stage > .slide > .legal-artwork {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+}
+.carousel-stage .legal-artwork-caption {
+  flex: 1 0 auto;
+  min-width: 0;
+}
+.carousel-stage .legal-artwork-caption-text,
+.footer-contact-links a {
+  overflow-wrap: anywhere;
+}
+.carousel-stage .legal-artwork-action { text-align: center; }
+.carousel-dots { min-width: 0; }
+@media (max-width: 760px) {
+  .carousel-stage > .slide { min-height: 0; }
+  .carousel-stage .legal-artwork-caption {
+    gap: 12px;
+    padding: clamp(12px, 4vw, 18px);
+  }
+  .carousel-stage .legal-artwork-caption-text {
+    font-size: clamp(11px, 2.9vw, 12px);
+    line-height: 1.5;
+  }
+  .footer-contact-links { padding-inline: 5px; }
+}
+@media (max-width: 380px) {
+  .carousel-footer { padding-inline: 10px; gap: 6px; }
+  .carousel-dots { gap: 1px; }
+  .carousel-dot { min-width: 0; }
+  .carousel-dot > span,
+  .carousel-dot.is-active > span { width: 14px; }
+  .carousel-arrows { gap: 3px; }
+  .arrow-button { width: 36px; height: 40px; }
+  .footer-contact-links { flex-direction: column; gap: 8px; }
+}
