@@ -104,6 +104,20 @@ def check() -> None:
     assert "aspect-ratio: 1672 / 941" not in css
     assert "aspect-ratio: 1916 / 821" in css
 
+    # La altura de la cuadrícula la determina la diapositiva más alta,
+    # incluso cuando otra está seleccionada; el footer nunca salta.
+    assert "display: grid;" in css and "grid-template-columns: minmax(0, 1fr);" in css
+    assert ".carousel-stage > .slide[hidden] {" in css
+    hidden_style = css.split(".carousel-stage > .slide[hidden] {", 1)[1].split("}", 1)[0]
+    assert "display: flex !important;" in hidden_style
+    assert "visibility: hidden;" in hidden_style
+    assert "pointer-events: none;" in hidden_style
+    assert "grid-area: 1 / 1;" in css
+    assert "min-height: 100svh;" in css and ".footer { flex-shrink: 0; }" in css
+    assert "@media (max-width: 760px)" in css and "@media (max-width: 380px)" in css
+    assert "flex-direction: column; gap: 8px;" in css, "Contacto debe ajustarse en móviles estrechos"
+    assert html.count('width="1916" height="821"') == 5, "Todas las imágenes deben declarar las mismas medidas"
+
     assert 'src="assets/carousel-legal.png"' in html, "Banner aprobado de Legal no enlazado"
     assert 'src="assets/carousel-drive-aws.png"' in html, "Imagen aprobada de Drive no enlazada"
     legal = (ROOT / "assets/carousel-legal.png").read_bytes()
