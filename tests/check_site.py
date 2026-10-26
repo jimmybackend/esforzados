@@ -116,7 +116,22 @@ def check() -> None:
     assert ".site-header *, .hero *, .footer * {" in css
     assert "color: var(--site-text-gold) !important;" in css
     assert ".hero .button-light {" in css and "background: #18110e;" in css
-    assert "href=\"assets/site.css?v=oro-20261026\"" in html, "Actualizar versión CSS para evitar caché"
+    assert "href=\"assets/site.css?v=oro-total-20261026\"" in html, "Actualizar versión CSS para evitar caché"
+
+
+    # Las cuatro leyendas solicitadas: retirar solo las frases ilustrativas.
+    assert "Servicios jurídicos y gestión documental. Portal privado de expedientes en desarrollo." in html
+    assert "Servicios jurídicos y gestión documental. Portal privado de expedientes en desarrollo; la imagen es ilustrativa." not in html
+    assert "Mail, ERP, landing pages, enlaces cortos, analítica y chat IA." in html
+    assert "Mail, ERP, landing pages, enlaces cortos, analítica y chat IA. Cifras del gráfico ilustrativas." not in html
+    assert "Plataforma privada para equipos autorizados: conversaciones con IA de Amazon Bedrock, análisis de documentos y transcripciones JSON conectados a ArcadeCloud Drive." in html
+    assert "Plataforma privada para equipos autorizados: conversaciones con IA de Amazon Bedrock, análisis de documentos y transcripciones JSON conectados a ArcadeCloud Drive. Imagen conceptual." not in html
+    assert "Gestión académica para escuelas y diplomados en línea: alumnos, periodos, planes de estudio, tareas, exámenes, boletas y pagos electrónicos." in html
+    assert "Gestión académica para escuelas y diplomados en línea: alumnos, periodos, planes de estudio, tareas, exámenes, boletas y pagos electrónicos. Imagen conceptual." not in html
+    for selector in (".site-header .brand *", ".carousel .carousel-dot *",
+                     ".carousel .legal-artwork-caption-text", ".footer .footer-compact *"):
+        assert selector in css, f"Sin refuerzo de oro para {selector}"
+    assert "-webkit-text-fill-color: #e7c990 !important;" in css
 
     # Todos los textos del footer, incluidos enlaces y copyright, deben permanecer dorados.
     footer_rules = css[css.index(".footer-compact {"):css.index("@media (max-width: 670px)", css.index(".footer-compact {"))]
